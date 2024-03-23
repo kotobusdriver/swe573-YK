@@ -15,4 +15,5 @@ public class CreateCommunityRequest {
   String description;
   String adminUserId;
   CommunityVisibility visibility;
+  PostTemplate template;
 }

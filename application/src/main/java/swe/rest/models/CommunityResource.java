@@ -18,6 +18,7 @@ public class CommunityResource {
   String description;
   CommunityVisibility visibility;
   CommunityStatus status;
+  PostTemplateResource postTemplateResource;
 
   public static CommunityResource convert(CommunityEntity community) {
     return CommunityResource.builder()
@@ -26,6 +27,7 @@ public class CommunityResource {
         .description(community.getDescription())
         .visibility(community.getVisibility())
         .status(community.getStatus())
+        .postTemplateResource(PostTemplateResource.convert(community.getPostTemplate()))
         .build();
   }
 }

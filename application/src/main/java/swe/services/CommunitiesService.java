@@ -8,6 +8,7 @@ import swe.domain.models.CommunityStatus;
 import swe.domain.repositories.CommunitiesRepository;
 import swe.domain.repositories.CommunityPostTemplatesRepository;
 import swe.rest.models.CreateCommunityRequest;
+import swe.rest.models.PostTemplate;
 
 @Service
 @AllArgsConstructor
@@ -22,12 +23,15 @@ public class CommunitiesService {
             .description(command.getDescription())
             .visibility(command.getVisibility())
             .status(CommunityStatus.ACTIVE)
-            .postTemplate(defaultPostTemplate())
+            .postTemplate(defaultPostTemplate(command.getTemplate()))
             .build();
     return communitiesRepository.save(community);
   }
 
-  private CommunityPostTemplateEntity defaultPostTemplate() {
-    return CommunityPostTemplateEntity.builder().template("template-change-me").build();
+  private CommunityPostTemplateEntity defaultPostTemplate(PostTemplate template) {
+    return CommunityPostTemplateEntity.builder()
+        .fieldDefinitions(
+            template.getFields().stream().map(PostTemplate.TemplateField::convert).toList())
+        .build();
   }
 }

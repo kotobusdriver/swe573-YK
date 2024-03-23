@@ -1,9 +1,9 @@
 package swe.domain.entities;
 
 import jakarta.persistence.*;
-import java.util.List;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import swe.domain.models.FieldType;
 
 @Entity
 @Getter
@@ -13,14 +13,18 @@ import org.hibernate.annotations.GenericGenerator;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CommunityPostTemplateEntity {
+public class FieldDefinition {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO, generator = "system-uuid")
   @GenericGenerator(name = "system-uuid", strategy = "uuid2")
   private String id;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<FieldDefinition> fieldDefinitions;
+  private String name;
 
-  @OneToOne private CommunityEntity community;
+  private Boolean optional;
+
+  @Enumerated(EnumType.STRING)
+  private FieldType type;
+
+  @OneToOne private CommunityPostTemplateEntity template;
 }

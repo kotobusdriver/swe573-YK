@@ -13,14 +13,16 @@ import org.hibernate.annotations.GenericGenerator;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CommunityPostTemplateEntity {
+public class PostEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO, generator = "system-uuid")
   @GenericGenerator(name = "system-uuid", strategy = "uuid2")
   private String id;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<FieldDefinition> fieldDefinitions;
+  @ManyToOne private CommunityEntity community;
 
-  @OneToOne private CommunityEntity community;
+  @ManyToOne private CommunityMemberEntity member;
+
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<PostField> fields;
 }

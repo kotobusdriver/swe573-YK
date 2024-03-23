@@ -1,6 +1,10 @@
 package swe.spec.scenarios;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -9,7 +13,9 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import swe.domain.models.CommunityStatus;
 import swe.domain.models.CommunityVisibility;
+import swe.domain.models.FieldType;
 import swe.rest.controllers.CommunitiesController;
+import swe.rest.controllers.PostsController;
 import swe.rest.controllers.UsersController;
 import swe.rest.models.*;
 import swe.spec.IntegrationTest;
@@ -48,6 +54,7 @@ public class CreateCommunityTest extends IntegrationTest {
             .description("We watch birds!!")
             .visibility(CommunityVisibility.PUBLIC)
             .adminUserId(user.getId())
+            .template(buildMySpecialTemplate())
             .build();
 
     MockHttpServletRequestBuilder createCommunityBuilder =
@@ -117,5 +124,77 @@ public class CreateCommunityTest extends IntegrationTest {
 
     Assertions.assertTrue(member.isPresent());
     Assertions.assertTrue(member.get().getAdmin());
+
+    // Send a new post to a community
+    CreatePostRequest postToCommunityRequest =
+        CreatePostRequest.builder()
+            .communityId(community.getId())
+            .byMemberId(member.get().getId())
+            .fields(createMySpecialPostFields(community))
+            .build();
+
+    MockHttpServletRequestBuilder createPostBuilder =
+        MockMvcRequestBuilders.post(PostsController.BASE_PATH)
+            .content(objectMapper.writeValueAsString(postToCommunityRequest))
+            .contentType(MediaType.APPLICATION_JSON);
+
+    MvcResult createPostResponse = mockMvc.perform(createPostBuilder).andReturn();
+
+    Assertions.assertEquals(200, createPostResponse.getResponse().getStatus());
+
+    PostResource post =
+        objectMapper.readValue(
+            createPostResponse.getResponse().getContentAsString(), PostResource.class);
+
+    Assertions.assertNotNull(post.getId());
+  }
+
+  private List<PostFieldResource> createMySpecialPostFields(CommunityResource community) {
+    Map<String, PostTemplateResource.TemplateFieldResource> fieldDefinitions =
+        community.getPostTemplateResource().getFields().stream()
+            .collect(Collectors.toMap(f -> f.getName(), Function.identity()));
+
+    return List.of(
+        PostFieldResource.builder()
+            .templateFieldId(fieldDefinitions.get("Title").getId())
+            .data("I saw a crow")
+            .build(),
+        PostFieldResource.builder()
+            .templateFieldId(fieldDefinitions.get("Picture").getId())
+            .data("http://pictures.com/the-crow.jpg")
+            .build(),
+        PostFieldResource.builder()
+            .templateFieldId(fieldDefinitions.get("Date").getId())
+            .data("2024-02-09")
+            .build());
+  }
+
+  private PostTemplate buildMySpecialTemplate() {
+    return PostTemplate.builder()
+        .field(
+            PostTemplate.TemplateField.builder()
+                .name("Title")
+                .optional(false)
+                .type(FieldType.TEXT)
+                .build())
+        .field(
+            PostTemplate.TemplateField.builder()
+                .name("Picture")
+                .optional(false)
+                .type(FieldType.IMAGE)
+                .build())
+        .field(
+            PostTemplate.TemplateField.builder()
+                .name("Date")
+                .optional(false)
+                .type(FieldType.DATE)
+                .build())
+        .field(
+            PostTemplate.TemplateField.builder()
+                .name("Story")
+                .optional(true)
+                .type(FieldType.TEXT)
+                .build())
+        .build();
   }
 }
