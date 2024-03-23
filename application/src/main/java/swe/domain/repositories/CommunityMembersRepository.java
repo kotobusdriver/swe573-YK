@@ -6,4 +6,6 @@ import swe.domain.entities.CommunityMemberEntity;
 
 public interface CommunityMembersRepository extends JpaRepository<CommunityMemberEntity, String> {
   List<CommunityMemberEntity> findByUserId(String userId);
+
+  List<CommunityMemberEntity> findByCommunityId(String communityId);
 }

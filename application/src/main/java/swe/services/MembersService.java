@@ -58,4 +58,8 @@ public class MembersService {
   public List<CommunityMemberEntity> findByUserId(String userId) {
     return communityMembersRepository.findByUserId(userId);
   }
+
+  public List<CommunityMemberEntity> findByCommunityId(String communityId) {
+    return communityMembersRepository.findByCommunityId(communityId);
+  }
 }
