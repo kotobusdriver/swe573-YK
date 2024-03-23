@@ -16,11 +16,12 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 @Builder
 public class UserEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid2")
-    private String id;
-    private String name;
-    private String email;
-    private String password;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO, generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "uuid2")
+  private String id;
+
+  private String name;
+  private String email;
+  private String password;
 }

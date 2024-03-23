@@ -14,6 +14,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = {"swe"})
 @EntityScan("swe")
 @PropertySources({
-        @PropertySource("classpath:application-test.properties"),
+  @PropertySource("classpath:application-test.properties"),
 })
 public class SpringTestConfig {}

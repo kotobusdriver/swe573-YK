@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateUserRequest {
-    String name;
-    String email;
-    String password;
+  String name;
+  String email;
+  String password;
 }

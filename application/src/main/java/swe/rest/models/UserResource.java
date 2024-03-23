@@ -11,13 +11,10 @@ import swe.domain.entities.UserEntity;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResource {
-    String id;
-    String name;
+  String id;
+  String name;
 
-    public static UserResource convert(UserEntity user) {
-        return UserResource.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .build();
-    }
+  public static UserResource convert(UserEntity user) {
+    return UserResource.builder().id(user.getId()).name(user.getName()).build();
+  }
 }

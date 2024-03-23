@@ -20,19 +20,19 @@ import swe.spec.config.SpringTestConfig;
 @SpringBootTest
 @AutoConfigureMockMvc
 public class IntegrationTest {
-    @Autowired private WebApplicationContext context;
-    @Autowired protected ObjectMapper objectMapper;
-    @Autowired protected MockMvc mockMvc;
+  @Autowired private WebApplicationContext context;
+  @Autowired protected ObjectMapper objectMapper;
+  @Autowired protected MockMvc mockMvc;
 
-    @BeforeEach
-    public void baseSetup() {
-        MockitoAnnotations.openMocks(this);
-    }
+  @BeforeEach
+  public void baseSetup() {
+    MockitoAnnotations.openMocks(this);
+  }
 
-    @Test
-    public void contextLoads() {
-        Assertions.assertNotNull(context);
-        Assertions.assertNotNull(objectMapper);
-        Assertions.assertNotNull(mockMvc);
-    }
+  @Test
+  public void contextLoads() {
+    Assertions.assertNotNull(context);
+    Assertions.assertNotNull(objectMapper);
+    Assertions.assertNotNull(mockMvc);
+  }
 }

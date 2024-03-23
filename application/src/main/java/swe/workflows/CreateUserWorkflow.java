@@ -9,15 +9,16 @@ import swe.rest.models.CreateUserRequest;
 @Component
 @AllArgsConstructor
 public class CreateUserWorkflow implements Workflow<CreateUserRequest, UserEntity> {
-    private final UsersRepository usersRepository;
+  private final UsersRepository usersRepository;
 
-    @Override
-    public UserEntity execute(CreateUserRequest command) {
-        UserEntity newUser = UserEntity.builder()
-                .name(command.getName())
-                .email(command.getEmail())
-                .password(command.getPassword())
-                .build();
-        return usersRepository.save(newUser);
-    }
+  @Override
+  public UserEntity execute(CreateUserRequest command) {
+    UserEntity newUser =
+        UserEntity.builder()
+            .name(command.getName())
+            .email(command.getEmail())
+            .password(command.getPassword())
+            .build();
+    return usersRepository.save(newUser);
+  }
 }
