@@ -12,6 +12,7 @@ import swe.rest.models.*;
 import swe.services.MembersService;
 import swe.workflows.CreateCommunityWorkflow;
 
+@CrossOrigin
 @RequestMapping(BASE_PATH)
 @RestController
 @AllArgsConstructor

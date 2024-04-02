@@ -9,6 +9,7 @@ import swe.domain.entities.PostEntity;
 import swe.rest.models.*;
 import swe.workflows.CreatePostWorkflow;
 
+@CrossOrigin
 @RequestMapping(BASE_PATH)
 @RestController
 @AllArgsConstructor

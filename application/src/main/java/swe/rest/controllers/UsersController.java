@@ -16,6 +16,7 @@ import swe.rest.models.UserResource;
 import swe.services.MembersService;
 import swe.workflows.CreateUserWorkflow;
 
+@CrossOrigin
 @RequestMapping(BASE_PATH)
 @RestController
 @AllArgsConstructor
