@@ -1,4 +1,11 @@
+import { useContext } from 'react';
+import {ApplicationContext} from "../ApplicationContext.jsx";
+
 function TopBar() {
+    const context = useContext(ApplicationContext);
+    console.log("Context : " + context);
+
+
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -23,9 +30,24 @@ function TopBar() {
                                 <li className="nav-item">
                                     <a className="nav-link" href="#">Inbox</a>
                                 </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#">Me</a>
-                                </li>
+                                {
+                                    context.state ?
+                                        (
+                                            <li className="nav-item">
+                                                <a className="nav-link" href="#">Me</a>
+                                            </li>
+                                        )
+                                        : (
+                                            <div>
+                                            <li className="nav-item">
+                                                <a className="nav-link" href="/register">Register</a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link" href="/login">Log in</a>
+                                            </li>
+                                            </div>
+                                        )
+                                }
                             </ul>
                         </div>
                     </div>
