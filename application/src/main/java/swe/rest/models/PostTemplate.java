@@ -2,6 +2,7 @@ package swe.rest.models;
 
 import java.util.List;
 import lombok.*;
+import swe.domain.entities.CommunityPostTemplateEntity;
 import swe.domain.entities.FieldDefinition;
 import swe.domain.models.FieldType;
 
@@ -24,5 +25,11 @@ public class PostTemplate {
     public FieldDefinition convert() {
       return FieldDefinition.builder().name(name).optional(optional).type(type).build();
     }
+  }
+
+  public CommunityPostTemplateEntity convert() {
+    return CommunityPostTemplateEntity.builder()
+        .fieldDefinitions(fields.stream().map(PostTemplate.TemplateField::convert).toList())
+        .build();
   }
 }

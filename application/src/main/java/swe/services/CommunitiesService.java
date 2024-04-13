@@ -3,12 +3,10 @@ package swe.services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import swe.domain.entities.CommunityEntity;
-import swe.domain.entities.CommunityPostTemplateEntity;
 import swe.domain.models.CommunityStatus;
 import swe.domain.repositories.CommunitiesRepository;
 import swe.domain.repositories.CommunityPostTemplatesRepository;
 import swe.rest.models.CreateCommunityRequest;
-import swe.rest.models.PostTemplate;
 
 @Service
 @AllArgsConstructor
@@ -23,15 +21,8 @@ public class CommunitiesService {
             .description(command.getDescription())
             .visibility(command.getVisibility())
             .status(CommunityStatus.ACTIVE)
-            .postTemplate(defaultPostTemplate(command.getTemplate()))
+            .postTemplate(command.getTemplate().convert())
             .build();
     return communitiesRepository.save(community);
-  }
-
-  private CommunityPostTemplateEntity defaultPostTemplate(PostTemplate template) {
-    return CommunityPostTemplateEntity.builder()
-        .fieldDefinitions(
-            template.getFields().stream().map(PostTemplate.TemplateField::convert).toList())
-        .build();
   }
 }
