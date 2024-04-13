@@ -10,7 +10,7 @@ function CreateCommunity() {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [visibility, setVisibility] = useState('PUBLIC');
-    const userId = "fd93ae71-5467-4237-a1d7-f61e4973eacd";
+    const userId = "7acbd6c8-7eeb-40ee-8fec-af9f2a79ce06";
 
     function createCommunity() {
         const requestOptions = {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 function Updates() {
     const [data, setData] = useState(null);
-    const userId = "fd93ae71-5467-4237-a1d7-f61e4973eacd";
+    const userId = "7acbd6c8-7eeb-40ee-8fec-af9f2a79ce06";
 
     useEffect(() => {
         fetch(`http://localhost:8080/api/users/${userId}/communities`)

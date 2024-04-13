@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: web
+    working_dir: /usr/src/app
+    container_name: web
+    volumes:
+      - ./web:/usr/src/app
+      - /usr/src/app/node_modules
+    tty: true
+    ports:
+      - "5173:5173"
+    command: npm run dev -- --host
+
+  be:
+    image: maven:3.9.0-eclipse-temurin-17-alpine
+    working_dir: /build
+    container_name: be
+    volumes:
+      - ./application/:/build
+      - ~/.m2:/root/.m2
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL_ENV=jdbc:postgresql://db:5432/community-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    command: >
+      bash -c "mvn clean package && java -Dspring.profiles.active=server -jar ./target/community-app.jar"
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    ports:
+      - "15432:5432"
+    environment:
+      - POSTGRES_DB=community-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:
+    driver: local
