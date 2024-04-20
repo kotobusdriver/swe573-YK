@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import {ApplicationContext} from "../ApplicationContext.jsx";
 
 function Updates() {
     const [data, setData] = useState(null);
-    const userId = "7acbd6c8-7eeb-40ee-8fec-af9f2a79ce06";
+    const context = useContext(ApplicationContext);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/users/${userId}/communities`)
-            .then(response => response.json())
-            .then(json => setData(json))
-            .catch(error => console.error(error));
+        if (context.user != null) {
+            console.log(`Fetching communities for user ${context.user.name}`);
+            fetch(`http://localhost:8080/api/users/${context.user.id}/communities`)
+                .then(response => response.json())
+                .then(json => setData(json))
+                .catch(error => console.error(error));
+        }
     }, []);
 
     return (
@@ -56,8 +60,8 @@ function Updates() {
                         <div className="d-flex w-75 justify-content-between">
                             <h5 className="mb-1">Post 1</h5>
                             <p className="mb-1">in</p>
-                            <h7 className="mb-1"><i
-                                className="bi bi-people-fill"></i> Web design maniacs</h7>
+                            <h6 className="mb-1"><i
+                                className="bi bi-people-fill"></i> Web design maniacs</h6>
                         </div>
                     </a>
                     <a href="#" className="list-group-item list-group-item-action list-group-item-light"
@@ -65,8 +69,8 @@ function Updates() {
                         <div className="d-flex w-75 justify-content-between">
                             <h5 className="mb-1">Post 2</h5>
                             <p className="mb-1">in</p>
-                            <h7 className="mb-1"><i
-                                className="bi bi-people-fill"></i> Web design maniacs</h7>
+                            <h6 className="mb-1"><i
+                                className="bi bi-people-fill"></i> Web design maniacs</h6>
                         </div>
                     </a>
                     <a href="#" className="list-group-item list-group-item-action list-group-item-light"
@@ -74,8 +78,8 @@ function Updates() {
                         <div className="d-flex w-75 justify-content-between">
                             <h5 className="mb-1">Post 3</h5>
                             <p className="mb-1">in</p>
-                            <h7 className="mb-1"><i
-                                className="bi bi-people-fill"></i> Web design maniacs</h7>
+                            <h6 className="mb-1"><i
+                                className="bi bi-people-fill"></i> Web design maniacs</h6>
                         </div>
                     </a>
                     <button type="button" className="btn btn-outline-primary d-flex justify-content-end">List all

@@ -1,5 +1,6 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
+import {ApplicationContext} from "../ApplicationContext.jsx";
 
 function CreateCommunity() {
     const VALID_VISIBILITIES = [
@@ -7,12 +8,20 @@ function CreateCommunity() {
         'PRIVATE',
     ];
 
+    const context = useContext(ApplicationContext);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [visibility, setVisibility] = useState('PUBLIC');
-    const userId = "7acbd6c8-7eeb-40ee-8fec-af9f2a79ce06";
+    const [hasError, setHasError] = useState(false);
+
+    useEffect(() => {
+        if (context.user == null) {
+            setHasError(true);
+        }
+    });
 
     function createCommunity() {
+        const userId = context.user.id;
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -40,6 +49,15 @@ function CreateCommunity() {
         let path = `home`;
         navigate(path);
     }
+
+    if (hasError)
+        return (
+            <>
+                <div>
+                    You need to log in.
+                </div>
+            </>
+        )
 
     return (
         <>

@@ -31,10 +31,10 @@ function TopBar() {
                                     <a className="nav-link" href="#">Inbox</a>
                                 </li>
                                 {
-                                    context.state ?
+                                    context.user ?
                                         (
                                             <li className="nav-item">
-                                                <a className="nav-link" href="#">Me</a>
+                                                <a className="nav-link" href="#">{context.user.name}</a>
                                             </li>
                                         )
                                         : (

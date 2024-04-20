@@ -20,12 +20,20 @@ function Login() {
         };
 
         fetch(`http://localhost:8080/api/login`, requestOptions)
-            .catch(error => console.error(error));
+            .then(response => response.json())
+            .then(user => setLoggedIn(user))
+            .catch(error => handleLoginFailure(error));
 
-        appContext.login(true);
-        console.log(appContext);
-        console.log("logged in");
         goHome();
+    }
+
+    function setLoggedIn(user) {
+        appContext.login(user);
+        console.log("logged in");
+    }
+
+    function handleLoginFailure(error) {
+        console.error(error);
     }
 
     let navigate = useNavigate();
