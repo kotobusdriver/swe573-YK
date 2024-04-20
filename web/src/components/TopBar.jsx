@@ -1,10 +1,21 @@
-import { useContext } from 'react';
+import {useContext} from 'react';
 import {ApplicationContext} from "../ApplicationContext.jsx";
+import {useNavigate} from "react-router-dom";
 
 function TopBar() {
     const context = useContext(ApplicationContext);
     console.log("Context : " + context);
 
+    function logout() {
+        context.logout();
+        goHome();
+    }
+
+    let navigate = useNavigate();
+    const goHome = () => {
+        let path = `home`;
+        navigate(path);
+    }
 
     return (
         <>
@@ -31,22 +42,28 @@ function TopBar() {
                                     <a className="nav-link" href="#">Inbox</a>
                                 </li>
                                 {
-                                    context.user ?
-                                        (
-                                            <li className="nav-item">
-                                                <a className="nav-link" href="#">{context.user.name}</a>
-                                            </li>
-                                        )
-                                        : (
-                                            <div>
-                                            <li className="nav-item">
-                                                <a className="nav-link" href="/register">Register</a>
-                                            </li>
-                                            <li className="nav-item">
-                                                <a className="nav-link" href="/login">Log in</a>
-                                            </li>
-                                            </div>
-                                        )
+                                    context.user &&
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="#">{context.user.name}</a>
+                                    </li>
+                                }
+                                {
+                                    context.user &&
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="#" onClick={logout}>Logout</a>
+                                    </li>
+                                }
+                                {
+                                    !context.user &&
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/register">Register</a>
+                                    </li>
+                                }
+                                {
+                                    !context.user &&
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/login">Log in</a>
+                                    </li>
                                 }
                             </ul>
                         </div>

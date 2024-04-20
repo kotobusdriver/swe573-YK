@@ -6,6 +6,7 @@ function Login() {
     const appContext = useContext(ApplicationContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [hasError, setHasError] = useState(false);
 
     function login() {
         const requestOptions = {
@@ -20,20 +21,24 @@ function Login() {
         };
 
         fetch(`http://localhost:8080/api/login`, requestOptions)
-            .then(response => response.json())
+            .then(response => {
+                if(!response.ok) throw new Error("error");
+                else return response.text()
+            })
             .then(user => setLoggedIn(user))
             .catch(error => handleLoginFailure(error));
-
-        goHome();
     }
 
     function setLoggedIn(user) {
         appContext.login(user);
         console.log("logged in");
+        setHasError(false);
+        goHome();
     }
 
     function handleLoginFailure(error) {
         console.error(error);
+        setHasError(true);
     }
 
     let navigate = useNavigate();
@@ -59,6 +64,12 @@ function Login() {
                         <input type="password" className="form-control" id="inputPassword" value={password}
                                onChange={(e) => setPassword(e.target.value)}/>
                     </div>
+                    {
+                        hasError &&
+                            <div>
+                                Invalid login
+                            </div>
+                    }
                     <button type="button" className="btn btn-primary" onClick={login}>Login</button>
                 </form>
             </div>
