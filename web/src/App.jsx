@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import CreateCommunity from './pages/CreateCommunity'
 import RegisterUser from './pages/RegisterUser'
 import Login from "./pages/Login.jsx";
+import Community from "./pages/Community.jsx";
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
                 <Route path="/" element={<Layout/>}>
                     <Route index element={<Home/>}/>
                     <Route path="create-community" element={<CreateCommunity/>}/>
+                    <Route path="communities/:id" element={<Community/>}/>
                     <Route path="register" element={<RegisterUser/>}/>
                     <Route path="login" element={<Login/>}/>
                     <Route path="*" element={<Home/>}/>
