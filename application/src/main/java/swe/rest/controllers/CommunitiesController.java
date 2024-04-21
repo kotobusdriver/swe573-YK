@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swe.domain.entities.CommunityEntity;
 import swe.domain.entities.CommunityMemberEntity;
+import swe.domain.entities.PostEntity;
 import swe.domain.repositories.CommunitiesRepository;
+import swe.domain.repositories.PostsRepository;
 import swe.rest.models.*;
 import swe.services.MembersService;
 import swe.workflows.CreateCommunityWorkflow;
@@ -25,6 +27,7 @@ public class CommunitiesController {
   private final CreateCommunityWorkflow createCommunityWorkflow;
   private final MembersService membersService;
   private final CommunitiesRepository communitiesRepository;
+  private final PostsRepository postsRepository;
 
   @PostMapping
   ResponseEntity<CommunityResource> createCommunity(
@@ -59,5 +62,14 @@ public class CommunitiesController {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(CommunityResource.convert(community.get()));
+  }
+
+  @GetMapping("/{id}/posts")
+  ResponseEntity<PostResourceListResponse> listPosts(@PathVariable("id") String communityId){
+    List<PostEntity> posts = postsRepository.findByCommunityId(communityId);
+    return ResponseEntity.ok(
+            PostResourceListResponse.builder()
+                    .posts(posts.stream().map(m -> PostResource.convert(m)).toList())
+                    .build());
   }
 }
