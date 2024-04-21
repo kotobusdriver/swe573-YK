@@ -1,5 +1,5 @@
 import {useContext, useEffect, useState} from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {ApplicationContext} from "../ApplicationContext.jsx";
 
 function CreateCommunity() {
@@ -8,17 +8,37 @@ function CreateCommunity() {
         'PRIVATE',
     ];
 
+    const FIELD_TYPES = Object.freeze({
+        TEXT: 'TEXT',
+        DATE: 'DATE',
+        IMAGE: 'IMAGE',
+        ATTACHMENT: 'ATTACHMENT',
+    });
+
     const context = useContext(ApplicationContext);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [visibility, setVisibility] = useState('PUBLIC');
     const [hasError, setHasError] = useState(false);
+    const [fields, setFields] = useState([createFieldDefinition("Title", FIELD_TYPES.TEXT, false)]);
 
     useEffect(() => {
         if (context.user == null) {
             setHasError(true);
         }
     });
+
+    function createFieldDefinition(name, type, optional) {
+        return {
+            name: name,
+            type: type,
+            optional: optional
+        };
+    }
+
+    function handleCreationFailure(error) {
+        console.log("Error occurred: " + error)
+    }
 
     function createCommunity() {
         const userId = context.user.id;
@@ -32,20 +52,22 @@ function CreateCommunity() {
                     adminUserId: new String(userId),
                     visibility: new String(visibility),
                     template: {
-                        fields: []
+                        fields: fields
                     }
                 }
             )
         };
 
         fetch(`http://localhost:8080/api/communities`, requestOptions)
-            .catch(error => console.error(error));
-
-        goHome();
+            .then(response => {
+                if(!response.ok) throw new Error("error");
+                else goHome();
+            })
+            .catch(error => handleCreationFailure(error));
     }
 
     let navigate = useNavigate();
-    const goHome = () =>{
+    const goHome = () => {
         let path = `home`;
         navigate(path);
     }
@@ -58,6 +80,58 @@ function CreateCommunity() {
                 </div>
             </>
         )
+
+    function setFieldName(index, newName) {
+        const nextFields = fields.map((f, i) => {
+            if (i === index) {
+                f.name = newName
+                return f;
+            } else {
+                return f;
+            }
+        });
+        setFields(nextFields);
+    }
+
+    function addField() {
+        const nextFields = [
+            ...fields,
+            createFieldDefinition("new field", FIELD_TYPES.TEXT, true),
+        ];
+        setFields(nextFields);
+    }
+
+    function removeField(index) {
+        const nextFields = [
+            ...fields.slice(0, index),
+            ...fields.slice(index + 1)
+        ];
+        setFields(nextFields);
+    }
+
+    function setFieldType(index, newType) {
+        const nextFields = fields.map((f, i) => {
+            if (i === index) {
+                f.type = newType
+                return f;
+            } else {
+                return f;
+            }
+        });
+        setFields(nextFields);
+    }
+
+    function setFieldOptional(index, newOptional) {
+        const nextFields = fields.map((f, i) => {
+            if (i === index) {
+                f.optional = newOptional
+                return f;
+            } else {
+                return f;
+            }
+        });
+        setFields(nextFields);
+    }
 
     return (
         <>
@@ -103,6 +177,43 @@ function CreateCommunity() {
                                     </div>
                                 ))
                             }
+                        </div>
+                    </fieldset>
+                    <fieldset className="row mb-3">
+                        <legend className="col-form-label col-sm-2 pt-0">Post template</legend>
+                        <div className="col-sm-10">
+                            {
+                                fields.map((field, index) => (
+                                    <div key={index} className="row mb-3">
+                                        <label htmlFor="inputFieldName" className="col-sm-2 col-form-label">Field
+                                            name</label>
+                                        <div className="col-sm-10">
+                                            <input type="text" className="form-control" id="inputFieldName"
+                                                   value={field.name}
+                                                   onChange={(e) => setFieldName(index, e.target.value)}/>
+                                        </div>
+                                        <div className="col-sm-10">
+                                            <label htmlFor="inputFieldType" className="col-sm-2 col-form-label">Field
+                                                type</label>
+                                            <input type="text" className="form-control" id="inputFieldType"
+                                                   value={field.type}
+                                                   onChange={(e) => setFieldType(index, e.target.value)}/>
+                                        </div>
+                                        <div className="col-sm-10">
+                                            <label htmlFor="inputFieldOptional" className="col-sm-2 col-form-label">Field
+                                                is optional</label>
+                                            <input type="text" className="form-control" id="inputFieldOptional"
+                                                   value={field.optional}
+                                                   onChange={(e) => setFieldOptional(index, e.target.value)}/>
+                                        </div>
+                                        <button type="button" className="btn btn-primary" onClick={() => {
+                                            removeField(index);
+                                        }}>Remove field
+                                        </button>
+                                    </div>
+                                ))
+                            }
+                            <button type="button" className="btn btn-primary" onClick={addField}>Add new field</button>
                         </div>
                     </fieldset>
                     <button type="button" className="btn btn-primary" onClick={createCommunity}>Create</button>

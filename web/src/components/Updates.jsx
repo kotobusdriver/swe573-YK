@@ -17,10 +17,6 @@ function Updates() {
 
     return (
         <>
-            DELETE ME
-            {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : 'Loading...'}
-            DELETE ME
-
             <div className="d-flex justify-content-evenly">
                 <div className="list-group w-25 p-2">
                     <p>Updates in communities I started:</p>
