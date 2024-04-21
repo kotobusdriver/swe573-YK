@@ -18,7 +18,9 @@ function Community() {
             { community == null && <p>Community is not found</p> }
             { community != null &&
                 <div className="m-5 border border-light-subtle p-3 rounded-2">
-                    <h6>Welcome to community {community.name}</h6>
+                    <h1>{community.name}</h1>
+                    <h6>{community.visibility}, {community.status}</h6>
+                    <h4>{community.description}</h4>
                 </div>
             }
         </>
