@@ -9,7 +9,6 @@ import swe.domain.models.FieldType;
 @Table(name = "Field_Definition")
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor

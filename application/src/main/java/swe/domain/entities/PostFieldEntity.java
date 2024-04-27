@@ -8,7 +8,6 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "Post_Field")
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor

@@ -11,7 +11,6 @@ import swe.domain.models.CommunityVisibility;
 @Table(name = "Community")
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor

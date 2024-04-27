@@ -1,6 +1,5 @@
 import {useParams} from 'react-router-dom';
 import {useEffect, useState} from "react";
-import community1 from "../assets/community.jpg";
 
 function Community() {
     const {id} = useParams();

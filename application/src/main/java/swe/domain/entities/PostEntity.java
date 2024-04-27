@@ -9,7 +9,6 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "Post")
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
