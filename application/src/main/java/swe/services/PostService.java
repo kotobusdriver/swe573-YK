@@ -41,16 +41,16 @@ public class PostService {
       CommunityEntity community,
       CommunityMemberEntity member,
       List<PostFieldResource> fieldResources) {
-    List<PostField> fields = buildPostFields(community, fieldResources);
+    List<PostFieldEntity> fields = buildPostFields(community, fieldResources);
     PostEntity post =
         PostEntity.builder().community(community).member(member).fields(fields).build();
     return postsRepository.save(post);
   }
 
-  private List<PostField> buildPostFields(
+  private List<PostFieldEntity> buildPostFields(
       CommunityEntity community, List<PostFieldResource> fieldResources) {
-    Map<String, FieldDefinition> map =
-        community.getPostTemplate().getFieldDefinitions().stream()
+    Map<String, FieldDefinitionEntity> map =
+        community.getFieldDefinitions().stream()
             .collect(Collectors.toMap(fd -> fd.getId(), Function.identity()));
 
     return fieldResources.stream().map(fr -> fr.convert(map)).toList();

@@ -38,7 +38,7 @@ public class MembersService {
   public CommunityMemberEntity createMember(
       @NonNull UserEntity user, @NonNull CommunityEntity community) {
     CommunityMemberEntity member =
-        CommunityMemberEntity.builder().user(user).community(community).admin(false).build();
+        CommunityMemberEntity.builder().user(user).community(community).isAdmin(false).build();
     return communityMembersRepository.save(member);
   }
 
@@ -51,7 +51,7 @@ public class MembersService {
   }
 
   public void makeAdmin(CommunityMemberEntity member) {
-    member.setAdmin(true);
+    member.setIsAdmin(true);
     communityMembersRepository.save(member);
   }
 

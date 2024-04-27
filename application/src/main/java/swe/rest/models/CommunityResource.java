@@ -27,7 +27,7 @@ public class CommunityResource {
         .description(community.getDescription())
         .visibility(community.getVisibility())
         .status(community.getStatus())
-        .postTemplateResource(PostTemplateResource.convert(community.getPostTemplate()))
+        .postTemplateResource(PostTemplateResource.convert(community.getFieldDefinitions()))
         .build();
   }
 }

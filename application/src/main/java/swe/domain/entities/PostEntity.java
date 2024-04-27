@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@Table(name = "Post")
 @Getter
 @Setter
 @ToString
@@ -19,10 +20,14 @@ public class PostEntity {
   @GenericGenerator(name = "system-uuid", strategy = "uuid2")
   private String id;
 
-  @ManyToOne private CommunityEntity community;
+  @ManyToOne
+  @JoinColumn(name = "community_id")
+  private CommunityEntity community;
 
-  @ManyToOne private CommunityMemberEntity member;
+  @ManyToOne
+  @JoinColumn(name = "member_id")
+  private CommunityMemberEntity member;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<PostField> fields;
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "post")
+  private List<PostFieldEntity> fields;
 }

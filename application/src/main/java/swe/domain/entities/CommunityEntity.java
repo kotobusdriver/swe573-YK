@@ -8,6 +8,7 @@ import swe.domain.models.CommunityStatus;
 import swe.domain.models.CommunityVisibility;
 
 @Entity
+@Table(name = "Community")
 @Getter
 @Setter
 @ToString
@@ -26,14 +27,14 @@ public class CommunityEntity {
   private String description;
 
   @Enumerated(EnumType.STRING)
-  private CommunityVisibility visibility;
-
-  @Enumerated(EnumType.STRING)
   private CommunityStatus status;
 
-  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-  private CommunityPostTemplateEntity postTemplate;
+  @Enumerated(EnumType.STRING)
+  private CommunityVisibility visibility;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "community")
+  private List<FieldDefinitionEntity> fieldDefinitions;
+
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "community")
   private List<CommunityMemberEntity> members;
 }

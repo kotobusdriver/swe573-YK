@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@Table(name = "Member")
 @Getter
 @Setter
 @ToString
@@ -18,13 +19,13 @@ public class CommunityMemberEntity {
   @GenericGenerator(name = "system-uuid", strategy = "uuid2")
   private String id;
 
-  private Boolean admin;
+  @ManyToOne
+  @JoinColumn(name = "community_id")
+  private CommunityEntity community;
 
   @ManyToOne
-  @JoinColumn(name = "userId")
+  @JoinColumn(name = "user_id")
   private UserEntity user;
 
-  @ManyToOne
-  @JoinColumn(name = "communityId")
-  private CommunityEntity community;
+  private Boolean isAdmin;
 }

@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import swe.domain.models.FieldType;
 
 @Entity
+@Table(name = "Field_Definition")
 @Getter
 @Setter
 @ToString
@@ -13,18 +14,20 @@ import swe.domain.models.FieldType;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FieldDefinition {
+public class FieldDefinitionEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO, generator = "system-uuid")
   @GenericGenerator(name = "system-uuid", strategy = "uuid2")
   private String id;
 
-  private String name;
-
-  private Boolean optional;
+  @ManyToOne
+  @JoinColumn(name = "community_id")
+  private CommunityEntity community;
 
   @Enumerated(EnumType.STRING)
   private FieldType type;
 
-  @OneToOne private CommunityPostTemplateEntity template;
+  private String name;
+
+  private Boolean optional;
 }

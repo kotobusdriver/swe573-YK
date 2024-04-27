@@ -21,7 +21,7 @@ public class CommunityMemberResource {
         .id(member.getId())
         .userId(member.getUser().getId())
         .communityId(member.getCommunity().getId())
-        .admin(member.getAdmin())
+        .admin(member.getIsAdmin())
         .build();
   }
 }

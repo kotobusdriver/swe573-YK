@@ -1,13 +1,11 @@
 package swe.domain.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
+@Table(name = "Users")
 @Getter
 @Setter
 @ToString

@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import swe.domain.entities.FieldDefinition;
-import swe.domain.entities.PostField;
+import swe.domain.entities.FieldDefinitionEntity;
+import swe.domain.entities.PostFieldEntity;
 
 @Data
 @Builder
@@ -17,7 +17,7 @@ public class PostFieldResource {
   // TODO: Inject actual template field information here
   private String data;
 
-  public PostField convert(Map<String, FieldDefinition> map) {
-    return PostField.builder().fieldDefinition(map.get(templateFieldId)).data(data).build();
+  public PostFieldEntity convert(Map<String, FieldDefinitionEntity> map) {
+    return PostFieldEntity.builder().fieldDefinition(map.get(templateFieldId)).data(data).build();
   }
 }
