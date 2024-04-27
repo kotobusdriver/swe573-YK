@@ -1,5 +1,6 @@
 import {useParams} from 'react-router-dom';
 import {useEffect, useState} from "react";
+import SendPost from "../components/SendPost.jsx";
 
 function Community() {
     const {id} = useParams();
@@ -20,6 +21,7 @@ function Community() {
             .then(json => setPosts(json.posts))
             .catch(error => console.error(error));
     }, []);
+
     return (
         <>
             {community == null && <p>Community is not found</p>}
@@ -39,6 +41,9 @@ function Community() {
                         </div>
                     </div>
                 ))
+            }
+            {community != null &&
+                <SendPost community={community}/>
             }
         </>
     )
