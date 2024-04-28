@@ -14,8 +14,8 @@ import swe.domain.entities.PostFieldEntity;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostFieldResource {
+  private String id;
   private String templateFieldId;
-  // TODO: Inject actual template field information here
   private String data;
 
   public PostFieldEntity convert(Map<String, FieldDefinitionEntity> map, PostEntity post) {

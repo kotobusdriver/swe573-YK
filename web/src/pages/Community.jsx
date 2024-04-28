@@ -2,6 +2,7 @@ import {useParams} from 'react-router-dom';
 import {useContext, useEffect, useState} from "react";
 import SendPost from "../components/SendPost.jsx";
 import {ApplicationContext} from "../ApplicationContext.jsx";
+import PostView from "../components/PostView.jsx";
 
 function Community() {
     const {id} = useParams();
@@ -10,6 +11,13 @@ function Community() {
     const [community, setCommunity] = useState(null);
     const [posts, setPosts] = useState([]);
     const [members, setMembers] = useState([]);
+
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    function refreshPosts() {
+        console.log("Refreshing")
+        setRefreshKey(old => old + 1)
+    }
 
     useEffect(() => {
         fetch(`http://localhost:8080/api/communities/${id}`)
@@ -23,7 +31,7 @@ function Community() {
             .then(response => response.json())
             .then(json => setPosts(json.posts))
             .catch(error => console.error(error));
-    }, []);
+    }, [refreshKey]);
 
     useEffect(() => {
         fetch(`http://localhost:8080/api/communities/${id}/members`)
@@ -45,17 +53,12 @@ function Community() {
                 </div>}
             {posts.length == 0 && <p>No posts found</p>}
             {community != null && posts.length > 0 &&
-                posts.map((post) => (
-                    <div key={post.id} className="card m-2 w-25">
-                        <img src={post} className="card-img-top" alt="..."/>
-                        <div className="card-body">
-                            <p className="card-text">{post.name}</p>
-                        </div>
-                    </div>
+                posts.map((post, index) => (
+                    <PostView key={index} post={post} template={community.postTemplateResource}/>
                 ))
             }
             {community != null &&
-                <SendPost community={community} memberId = {memberId}/>
+                <SendPost community={community} memberId={memberId} onPostSubmit={refreshPosts}/>
             }
         </>
     )

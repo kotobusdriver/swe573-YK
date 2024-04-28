@@ -37,6 +37,7 @@ function SendPost(props) {
         };
 
         fetch(`http://localhost:8080/api/posts`, requestOptions)
+            .then(response => {props.onPostSubmit();})
             .catch(error => console.log("An error occurred", error));
     }
 

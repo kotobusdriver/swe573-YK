@@ -62,4 +62,8 @@ public class MembersService {
   public List<CommunityMemberEntity> findByCommunityId(String communityId) {
     return communityMembersRepository.findByCommunityId(communityId);
   }
+
+  public Optional<CommunityMemberEntity> findByMemberId(String memberId) {
+    return communityMembersRepository.findById(memberId);
+  }
 }
