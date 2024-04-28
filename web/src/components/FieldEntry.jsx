@@ -2,10 +2,29 @@ import {useState} from "react";
 
 function FieldEntry({field, onValueChange}) {
     const [value, setValue] = useState(field.name);
+    const [uniqueId, setUniqueId] = useState(crypto.randomUUID());
 
     function changeValue(v) {
         setValue(v)
         onValueChange(v)
+    }
+
+    function uploadFile(file) {
+        const fileName = uniqueId + "-" + file.name;
+        const url = `http://localhost:8080/files/${fileName}`
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        const requestOptions = {
+            method: 'POST',
+            body: formData
+        };
+
+        fetch(url, requestOptions)
+            .catch(error => console.log("An error occurred!", error));
+
+        changeValue(url);
     }
 
     function renderText(field) {
@@ -18,13 +37,13 @@ function FieldEntry({field, onValueChange}) {
 
     function renderImage(field) {
         return (
-            <input type="file" className="form-control" id="inputFieldImage" accept="image/png, image/jpeg" onChange={(e) => changeValue(e.target.files[0])}/>
+            <input type="file" className="form-control" id="inputFieldImage" accept="image/png, image/jpeg" onChange={(e) => uploadFile(e.target.files[0])}/>
         )
     }
 
     function renderAttachment(field) {
         return (
-        <input type="file" className="form-control" id="inputFieldAttachment"onChange={(e) => changeValue(e.target.files[0])}/>
+        <input type="file" className="form-control" id="inputFieldAttachment"onChange={(e) => uploadFile(e.target.files[0])}/>
         )
     }
 

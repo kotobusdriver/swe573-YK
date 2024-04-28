@@ -1,5 +1,6 @@
 import {useState} from "react";
 import FieldEntry from "./FieldEntry.jsx";
+import {useNavigate} from "react-router-dom";
 
 function SendPost(props) {
     const fieldDefinitions = props.community.postTemplateResource.fields;
@@ -17,6 +18,26 @@ function SendPost(props) {
     function createPost() {
         // TODO
         console.log(fields)
+
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(
+                {
+                    communityId: new String(props.community.id),
+                    byMemberId: new String(props.memberId),
+                    fields: fields.map((f) => {
+                        return {
+                            templateFieldId: new String(f.definition.id),
+                            data: new String(f.value)
+                        }
+                    })
+                }
+            )
+        };
+
+        fetch(`http://localhost:8080/api/posts`, requestOptions)
+            .catch(error => console.log("An error occurred", error));
     }
 
     function setFieldValue(field, value) {

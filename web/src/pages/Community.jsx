@@ -1,12 +1,15 @@
 import {useParams} from 'react-router-dom';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import SendPost from "../components/SendPost.jsx";
+import {ApplicationContext} from "../ApplicationContext.jsx";
 
 function Community() {
     const {id} = useParams();
+    const context = useContext(ApplicationContext);
 
     const [community, setCommunity] = useState(null);
     const [posts, setPosts] = useState([]);
+    const [members, setMembers] = useState([]);
 
     useEffect(() => {
         fetch(`http://localhost:8080/api/communities/${id}`)
@@ -21,6 +24,15 @@ function Community() {
             .then(json => setPosts(json.posts))
             .catch(error => console.error(error));
     }, []);
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/api/communities/${id}/members`)
+            .then(response => response.json())
+            .then(json => setMembers(json.members))
+            .catch(error => console.error(error));
+    }, []);
+
+    const memberId = members.find((member) => member.userId === context.user.id)?.id
 
     return (
         <>
@@ -43,7 +55,7 @@ function Community() {
                 ))
             }
             {community != null &&
-                <SendPost community={community}/>
+                <SendPost community={community} memberId = {memberId}/>
             }
         </>
     )

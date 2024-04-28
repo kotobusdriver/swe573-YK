@@ -25,3 +25,5 @@ application/target/
 *.njsproj
 *.sln
 *.sw?
+
+uploads/
