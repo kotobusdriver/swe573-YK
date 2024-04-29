@@ -2,6 +2,7 @@ This repository is opened for the SWE573 Software Development Practice course (2
 Repo owner: Yana Krasovska, student number 2022719111.
 
 
+
 RUN THE APPLICATION IN DOCKER
 
 1. Install Docker Desktop   
