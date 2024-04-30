@@ -194,7 +194,7 @@ function CreateCommunity() {
                                         </div>
                                         <div className="col-sm-10">
                                             <label htmlFor="inputFieldType" className="col-sm-2 col-form-label">Field
-                                                type</label>
+                                                type (Allowed types are: TEXT, IMAGE, DATE, ATTACHMENT. Please enter manually)</label>
                                             <input type="text" className="form-control" id="inputFieldType"
                                                    value={field.type}
                                                    onChange={(e) => setFieldType(index, e.target.value)}/>
