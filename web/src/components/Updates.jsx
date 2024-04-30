@@ -8,7 +8,7 @@ function Updates() {
     useEffect(() => {
         if (context.user != null) {
             console.log(`Fetching communities for user ${context.user.name}`);
-            fetch(`http://localhost:8080/api/users/${context.user.id}/communities`)
+            fetch(`/api/users/${context.user.id}/communities`)
                 .then(response => response.json())
                 .then(json => setData(json))
                 .catch(error => console.error(error));

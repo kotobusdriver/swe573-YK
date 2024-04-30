@@ -12,7 +12,7 @@ function ExploreMore() {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/communities`)
+        fetch(`/api/communities`)
             .then(response => response.json())
             .then(json => setCommunities(json.communities))
             .catch(error => console.error(error));

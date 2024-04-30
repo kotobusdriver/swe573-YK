@@ -20,7 +20,7 @@ function Login() {
             )
         };
 
-        fetch(`http://localhost:8080/api/login`, requestOptions)
+        fetch(`/api/login`, requestOptions)
             .then(response => {
                 if(!response.ok) throw new Error("error");
                 else return response.text()

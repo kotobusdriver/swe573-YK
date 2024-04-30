@@ -8,7 +8,7 @@ function PostView({post, template}) {
     });
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/members/${post.byMemberId}`)
+        fetch(`/api/members/${post.byMemberId}`)
             .then(response => response.json())
             .then(json => setMember(json))
             .catch(error => console.error(error));
@@ -16,17 +16,13 @@ function PostView({post, template}) {
 
     return (
         <>
-            <div className="card m-2 w-25">
-                <div className="card-body">
-                    <p className="card-text">by {member.name}</p>
-                </div>
-                <div className="col-sm-10">
-                    {
-                        post.fields.map((field, index) => (
-                            <FieldView key={index} field={field} template={template}/>
-                        ))
-                    }
-                </div>
+            <div className="card m-2 w-50">
+                {
+                    post.fields.map((field, index) => (
+                        <FieldView key={index} field={field} template={template}/>
+                    ))
+                }
+                <p>by {member.name}</p>
             </div>
         </>
     )

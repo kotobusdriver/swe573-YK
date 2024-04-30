@@ -19,7 +19,7 @@ function RegisterUser() {
             )
         };
 
-        fetch(`http://localhost:8080/api/users`, requestOptions)
+        fetch(`/api/users`, requestOptions)
             .catch(error => console.error(error));
 
         goHome();

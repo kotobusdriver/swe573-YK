@@ -5,25 +5,31 @@ function FieldView({field, template}) {
 
     function renderText() {
         return (
-            <p>{field.data}</p>
+            <p>{fieldDefinition.name}: {field.data}</p>
         );
     }
 
     function renderImage() {
         return (
-            <img src={field.data}/>
+            <>
+                <p>{fieldDefinition.name}</p>
+                <img src={field.data} className="img-fluid"/>
+            </>
         );
     }
 
     function renderAttachment() {
         return (
-            <a href={field.data}>Download File</a>
+            <>
+                <p>{fieldDefinition.name}</p>
+                <a href={field.data}>Download File</a>
+            </>
         );
     }
 
     function renderDate() {
         return (
-            <p>{field.data}</p>
+            <p>{fieldDefinition.name}: {field.data}</p>
         );
     }
 
@@ -49,7 +55,7 @@ function FieldView({field, template}) {
 
     return (
         <>
-            <div className="card m-2 w-25">
+            <div className="p-2">
                 {
                     renderInput()
                 }

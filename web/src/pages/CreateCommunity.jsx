@@ -58,7 +58,7 @@ function CreateCommunity() {
             )
         };
 
-        fetch(`http://localhost:8080/api/communities`, requestOptions)
+        fetch(`/api/communities`, requestOptions)
             .then(response => {
                 if(!response.ok) throw new Error("error");
                 else goHome();

@@ -1,8 +1,9 @@
 import {useState} from "react";
+import {v4 as uuidv4} from 'uuid';
 
 function FieldEntry({field, onValueChange}) {
     const [value, setValue] = useState(field.name);
-    const [uniqueId, setUniqueId] = useState(crypto.randomUUID());
+    const [uniqueId, setUniqueId] = useState(uuidv4());
 
     function changeValue(v) {
         setValue(v)
@@ -11,7 +12,7 @@ function FieldEntry({field, onValueChange}) {
 
     function uploadFile(file) {
         const fileName = uniqueId + "-" + file.name;
-        const url = `http://localhost:8080/files/${fileName}`
+        const url = `/files/${fileName}`
 
         const formData = new FormData();
         formData.append("file", file);

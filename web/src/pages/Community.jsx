@@ -11,8 +11,15 @@ function Community() {
     const [community, setCommunity] = useState(null);
     const [posts, setPosts] = useState([]);
     const [members, setMembers] = useState([]);
+    const [memberId, setMemberId] = useState(null);
 
     const [refreshKey, setRefreshKey] = useState(0);
+
+    useEffect(() => {
+        if (context.user != null) {
+            setMemberId(members.find((member) => member.userId === context.user.id)?.id)
+        }
+    });
 
     function refreshPosts() {
         console.log("Refreshing")
@@ -20,27 +27,26 @@ function Community() {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/communities/${id}`)
+        fetch(`/api/communities/${id}`)
             .then(response => response.json())
             .then(json => setCommunity(json))
             .catch(error => console.error(error));
     }, []);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/communities/${id}/posts`)
+        fetch(`/api/communities/${id}/posts`)
             .then(response => response.json())
             .then(json => setPosts(json.posts))
             .catch(error => console.error(error));
     }, [refreshKey]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/communities/${id}/members`)
+        fetch(`/api/communities/${id}/members`)
             .then(response => response.json())
             .then(json => setMembers(json.members))
             .catch(error => console.error(error));
     }, []);
 
-    const memberId = members.find((member) => member.userId === context.user.id)?.id
 
     return (
         <>
@@ -54,10 +60,12 @@ function Community() {
             {posts.length == 0 && <p>No posts found</p>}
             {community != null && posts.length > 0 &&
                 posts.map((post, index) => (
-                    <PostView key={index} post={post} template={community.postTemplateResource}/>
+                    <div className="d-flex justify-content-center p-2">
+                        <PostView key={index} post={post} template={community.postTemplateResource}/>
+                    </div>
                 ))
             }
-            {community != null &&
+            {community != null && memberId != null &&
                 <SendPost community={community} memberId={memberId} onPostSubmit={refreshPosts}/>
             }
         </>
