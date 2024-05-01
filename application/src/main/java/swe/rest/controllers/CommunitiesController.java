@@ -36,6 +36,13 @@ public class CommunitiesController {
     return ResponseEntity.ok(CommunityResource.convert(community));
   }
 
+  @PostMapping("/{id}/members")
+  ResponseEntity<CommunityMemberUserResource> createCommunityMember(
+          @PathVariable("id") String communityId, @RequestBody SubscriptionToCommunityRequest request) {
+    CommunityMemberEntity member = membersService.createMember(communityId, request.getUserId());
+    return ResponseEntity.ok(CommunityMemberUserResource.convert(member));
+  }
+
   @GetMapping("/{id}/members")
   ResponseEntity<CommunityMemberListResponse> getCommunityMembers(
       @PathVariable("id") String communityId) {

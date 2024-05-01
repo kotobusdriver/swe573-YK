@@ -15,12 +15,6 @@ function Community() {
 
     const [refreshKey, setRefreshKey] = useState(0);
 
-    useEffect(() => {
-        if (context.user != null) {
-            setMemberId(members.find((member) => member.userId === context.user.id)?.id)
-        }
-    });
-
     function refreshPosts() {
         console.log("Refreshing")
         setRefreshKey(old => old + 1)
@@ -41,12 +35,45 @@ function Community() {
     }, [refreshKey]);
 
     useEffect(() => {
+        console.log("Fetching members")
         fetch(`/api/communities/${id}/members`)
             .then(response => response.json())
             .then(json => setMembers(json.members))
             .catch(error => console.error(error));
-    }, []);
+    }, [refreshKey]);
 
+    useEffect(() => {
+        console.log("Setting memberId")
+        if (context.user != null) {
+            setMemberId(members.find((member) => member.userId === context.user.id)?.id)
+        }
+    }, [members]);
+
+
+    console.log("userId: " + context.user.id)
+    console.log("members: " + JSON.stringify(members))
+    console.log("memberId: " + memberId)
+
+    function becomeMember() {
+        console.log("Making a member for community")
+
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(
+                {
+                    userId: new String(context.user.id),
+                }
+            )
+        };
+
+        fetch(`/api/communities/${id}/members`, requestOptions)
+            .then(response => response.json())
+            .then(json => setMemberId(json.id))
+            .catch(error => console.log("An error occurred", error));
+
+        refreshPosts();
+    }
 
     return (
         <>
@@ -56,11 +83,15 @@ function Community() {
                     <h1>{community.name}</h1>
                     <h6>{community.visibility}, {community.status}</h6>
                     <h4>{community.description}</h4>
+                    {context.user != null && memberId == null &&
+                        <button type="button" className="btn btn-outline-primary d-flex justify-content-end"
+                                onClick={becomeMember}>Subscribe
+                        </button>}
                 </div>}
             {posts.length == 0 && <p>No posts found</p>}
             {community != null && posts.length > 0 &&
                 posts.map((post, index) => (
-                    <div className="d-flex justify-content-center p-2">
+                    <div key={index} className="d-flex justify-content-center p-2">
                         <PostView key={index} post={post} template={community.postTemplateResource}/>
                     </div>
                 ))

@@ -26,8 +26,8 @@ public class CreateCommunityWorkflow implements Workflow<CreateCommunityRequest,
     return communitiesService.createCommunity(command);
   }
 
-  private CommunityMemberEntity createMember(CommunityEntity community, String adminUserId) {
-    return membersService.createMember(community.getId(), adminUserId);
+  private CommunityMemberEntity createMember(CommunityEntity community, String userId) {
+    return membersService.createMember(community.getId(), userId);
   }
 
   private void makeAdmin(CommunityMemberEntity member) {
