@@ -49,11 +49,6 @@ function Community() {
         }
     }, [members]);
 
-
-    console.log("userId: " + context.user.id)
-    console.log("members: " + JSON.stringify(members))
-    console.log("memberId: " + memberId)
-
     function becomeMember() {
         console.log("Making a member for community")
 

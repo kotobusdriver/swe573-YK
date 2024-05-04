@@ -1,10 +1,10 @@
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import {ApplicationContext} from "../ApplicationContext.jsx";
 import {useNavigate} from "react-router-dom";
 
 function TopBar() {
     const context = useContext(ApplicationContext);
-    console.log("Context : " + context);
+    const [searchText, setSearchText] = useState(null);
 
     function logout() {
         context.logout();
@@ -17,6 +17,15 @@ function TopBar() {
         navigate(path);
     }
 
+    const goToSearchResults = () => {
+        let path = `search-results/${searchText}`;
+        navigate(path);
+    }
+
+    function search() {
+        goToSearchResults();
+    }
+
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -24,8 +33,10 @@ function TopBar() {
                     <a className="navbar-brand" href="/">Community Web</a>
                     <form className="d-flex" role="search">
                         <input className="form-control me-2" type="search" placeholder="Search"
-                               aria-label="Search"/>
-                        <button className="btn btn-outline-success" type="submit">Search</button>
+                               aria-label="Search"
+                               value={searchText}
+                               onChange={(e) => setSearchText(e.target.value)}/>
+                        <button className="btn btn-outline-success" type="button" onClick={search}>Search</button>
                     </form>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"

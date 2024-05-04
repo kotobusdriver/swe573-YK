@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import swe.domain.entities.CommunityEntity;
 import swe.domain.entities.CommunityMemberEntity;
@@ -54,8 +56,10 @@ public class CommunitiesController {
   }
 
   @GetMapping
-  ResponseEntity<CommunityResourceListResponse> getCommunities() {
-    List<CommunityEntity> communities = communitiesRepository.findAll();
+  ResponseEntity<CommunityResourceListResponse> getCommunities(@RequestParam(value = "search", required = false) String searchText) {
+    List<CommunityEntity> communities = StringUtils.hasText(searchText)
+            ? communitiesRepository.findByNameContainingIgnoreCase(searchText)
+            : communitiesRepository.findAll();
     return ResponseEntity.ok(
             CommunityResourceListResponse.builder()
                     .communities(communities.stream().map(m -> CommunityResource.convert(m)).toList())
@@ -63,7 +67,7 @@ public class CommunitiesController {
   }
 
   @GetMapping("/{id}")
-  ResponseEntity<CommunityResource> getCommunities(@PathVariable("id") String communityId) {
+  ResponseEntity<CommunityResource> getCommunityById(@PathVariable("id") String communityId) {
     Optional<CommunityEntity> community = communitiesRepository.findById(communityId);
     if (community.isEmpty()) {
       return ResponseEntity.notFound().build();

@@ -5,6 +5,7 @@ import CreateCommunity from './pages/CreateCommunity'
 import RegisterUser from './pages/RegisterUser'
 import Login from "./pages/Login.jsx";
 import Community from "./pages/Community.jsx";
+import SearchResults from "./pages/SearchResults.jsx";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                     <Route path="create-community" element={<CreateCommunity/>}/>
                     <Route path="communities/:id" element={<Community/>}/>
                     <Route path="register" element={<RegisterUser/>}/>
+                    <Route path="search-results/:searchText" element={<SearchResults/>}/>
                     <Route path="login" element={<Login/>}/>
                     <Route path="*" element={<Home/>}/>
                 </Route>
