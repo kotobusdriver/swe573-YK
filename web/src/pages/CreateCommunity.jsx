@@ -122,6 +122,7 @@ function CreateCommunity() {
     }
 
     function setFieldOptional(index, newOptional) {
+        console.log(newOptional)
         const nextFields = fields.map((f, i) => {
             if (i === index) {
                 f.optional = newOptional
@@ -192,19 +193,37 @@ function CreateCommunity() {
                                                    value={field.name}
                                                    onChange={(e) => setFieldName(index, e.target.value)}/>
                                         </div>
+                                        <label htmlFor="inputFieldType" className="col-sm-2 col-form-label">Field
+                                            type</label>
                                         <div className="col-sm-10">
-                                            <label htmlFor="inputFieldType" className="col-sm-2 col-form-label">Field
-                                                type (Allowed types are: TEXT, IMAGE, DATE, ATTACHMENT. Please enter manually)</label>
-                                            <input type="text" className="form-control" id="inputFieldType"
-                                                   value={field.type}
-                                                   onChange={(e) => setFieldType(index, e.target.value)}/>
+                                            {
+                                                Object.keys(FIELD_TYPES).map((key, index) => (
+                                                    <div key={key} className="form-check">
+                                                        <input
+                                                            type="radio"
+                                                            name="current-type"
+                                                            className="form-check-input"
+                                                            id={key}
+                                                            value={FIELD_TYPES[key]}
+                                                            onChange={event => {
+                                                                setFieldType(index, event.target.value);
+                                                            }}
+                                                        />
+                                                        <label className="form-check-label" htmlFor={key}>
+                                                            {key}
+                                                        </label>
+                                                    </div>
+                                                ))
+                                            }
                                         </div>
-                                        <div className="col-sm-10">
-                                            <label htmlFor="inputFieldOptional" className="col-sm-2 col-form-label">Field
-                                                is optional</label>
-                                            <input type="text" className="form-control" id="inputFieldOptional"
-                                                   value={field.optional}
-                                                   onChange={(e) => setFieldOptional(index, e.target.value)}/>
+                                        <div className="col-sm-10 form-check">
+                                            <input type="checkbox" className="form-check-input" id="flexCheckDefault"
+                                                   checked={field.optional}
+                                                   onChange={(e) => setFieldOptional(index, e.target.checked)}/>
+                                            <label className="form-check-label" htmlFor="flexCheckDefault">
+                                                Field
+                                                is optional
+                                            </label>
                                         </div>
                                         <button type="button" className="btn btn-primary" onClick={() => {
                                             removeField(index);
