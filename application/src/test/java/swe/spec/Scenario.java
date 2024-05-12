@@ -14,15 +14,22 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import swe.spec.config.SpringTestConfig;
+import swe.spec.usecases.*;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {SpringTestConfig.class})
 @SpringBootTest
 @AutoConfigureMockMvc
-public class IntegrationTest {
+public class Scenario {
   @Autowired private WebApplicationContext context;
   @Autowired protected ObjectMapper objectMapper;
   @Autowired protected MockMvc mockMvc;
+  @Autowired protected CreateUserUsecase createUserUsecase;
+  @Autowired protected CreateCommunityUsecase createCommunityUsecase;
+  @Autowired protected SendPostUsecase sendPostUsecase;
+  @Autowired protected GetUserCommunitiesUsecase getUserCommunitiesUsecase;
+  @Autowired protected GetCommunityMembersUsecase getCommunityMembersUsecase;
+  @Autowired protected SubscribeToCommunityUsecase subscribeToCommunityUsecase;
 
   @BeforeEach
   public void baseSetup() {
