@@ -87,7 +87,7 @@ function Community() {
             {community != null && posts.length > 0 &&
                 posts.map((post, index) => (
                     <div key={index} className="d-flex justify-content-center p-2">
-                        <PostView key={index} post={post} template={community.postTemplateResource}/>
+                        <PostView key={index} post={post} template={community.postTemplateResource} memberId={memberId} onDelete={refreshPosts}/>
                     </div>
                 ))
             }
