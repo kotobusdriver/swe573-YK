@@ -12,6 +12,7 @@ import swe.domain.repositories.CommunitiesRepository;
 import swe.domain.repositories.CommunityMembersRepository;
 import swe.domain.repositories.PostsRepository;
 import swe.exceptions.CommunityNotFoundException;
+import swe.exceptions.MemberIsNotAllowedToDeletePostException;
 import swe.exceptions.MemberNotFoundException;
 import swe.rest.models.CreatePostRequest;
 import swe.rest.models.PostFieldResource;
@@ -56,4 +57,15 @@ public class PostService {
 
     return fieldResources.stream().map(fr -> fr.convert(map, post)).toList();
   }
+
+    public void deletePost(String postId, String memberId) {
+      Optional<PostEntity> foundPost = postsRepository.findById(postId);
+      if (foundPost.isPresent()) {
+        PostEntity post = foundPost.get();
+        if (!memberId.equals(post.getMember().getId())) {
+          throw new MemberIsNotAllowedToDeletePostException(memberId, postId);
+        }
+        postsRepository.delete(post);
+      }
+    }
 }

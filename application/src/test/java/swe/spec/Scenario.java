@@ -30,6 +30,7 @@ public class Scenario {
   @Autowired protected GetUserCommunitiesUsecase getUserCommunitiesUsecase;
   @Autowired protected GetCommunityMembersUsecase getCommunityMembersUsecase;
   @Autowired protected SubscribeToCommunityUsecase subscribeToCommunityUsecase;
+  @Autowired protected DeletePostUsecase deletePostUsecase;
 
   @BeforeEach
   public void baseSetup() {
