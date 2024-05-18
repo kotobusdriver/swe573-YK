@@ -23,6 +23,6 @@ C:\Users\YOURMACHINE> docker-compose up
 
 4. Wait for container images to be pulled from internet and the application to be built and started. This may take some time.
 
-5. Open http://localhost:5173 in your browser to view the application
+5. Open http://localhost:19000 in your browser to view the application
 
 6. To stop the application use Ctrl+C to stop containers in the terminal.

@@ -58,7 +58,7 @@ function FieldEntry({field, onValueChange}) {
 
     function renderUnknown(field) {
         return (
-            <p>Some nose picker input</p>
+            <p>Some input</p>
         )
     }
 
