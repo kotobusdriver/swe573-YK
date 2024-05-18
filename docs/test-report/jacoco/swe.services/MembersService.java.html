@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MembersService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">application</a> &gt; <a href="index.source.html" class="el_package">swe.services</a> &gt; <span class="el_source">MembersService.java</span></div><h1>MembersService.java</h1><pre class="source lang-java linenums">package swe.services;
+
+import java.util.List;
+import java.util.Optional;
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import org.springframework.stereotype.Service;
+import swe.domain.entities.CommunityEntity;
+import swe.domain.entities.CommunityMemberEntity;
+import swe.domain.entities.UserEntity;
+import swe.domain.repositories.CommunitiesRepository;
+import swe.domain.repositories.CommunityMembersRepository;
+import swe.domain.repositories.UsersRepository;
+import swe.exceptions.CommunityNotFoundException;
+import swe.exceptions.MemberNotFoundException;
+import swe.exceptions.UserNotFoundException;
+
+@Service
+@AllArgsConstructor
+public class MembersService {
+  private final UsersRepository usersRepository;
+  private final CommunitiesRepository communitiesRepository;
+  private final CommunityMembersRepository communityMembersRepository;
+
+  public CommunityMemberEntity createMember(String communityId, String userId) {
+<span class="fc" id="L26">    Optional&lt;UserEntity&gt; foundUser = usersRepository.findById(userId);</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">    if (foundUser.isEmpty()) {</span>
+<span class="nc" id="L28">      throw new UserNotFoundException(userId);</span>
+    }
+<span class="fc" id="L30">    Optional&lt;CommunityEntity&gt; foundCommunity = communitiesRepository.findById(communityId);</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">    if (foundCommunity.isEmpty()) {</span>
+<span class="nc" id="L32">      throw new CommunityNotFoundException(communityId);</span>
+    }
+
+<span class="fc" id="L35">    return createMember(foundUser.get(), foundCommunity.get());</span>
+  }
+
+  public CommunityMemberEntity createMember(
+<span class="pc bpc" id="L39" title="2 of 4 branches missed.">      @NonNull UserEntity user, @NonNull CommunityEntity community) {</span>
+    CommunityMemberEntity member =
+<span class="fc" id="L41">        CommunityMemberEntity.builder().user(user).community(community).isAdmin(false).build();</span>
+<span class="fc" id="L42">    return communityMembersRepository.save(member);</span>
+  }
+
+  public void makeAdmin(String memberId) {
+<span class="nc" id="L46">    Optional&lt;CommunityMemberEntity&gt; foundMember = communityMembersRepository.findById(memberId);</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">    if (foundMember.isEmpty()) {</span>
+<span class="nc" id="L48">      throw new MemberNotFoundException(memberId);</span>
+    }
+<span class="nc" id="L50">    makeAdmin(foundMember.get());</span>
+<span class="nc" id="L51">  }</span>
+
+  public void makeAdmin(CommunityMemberEntity member) {
+<span class="fc" id="L54">    member.setIsAdmin(true);</span>
+<span class="fc" id="L55">    communityMembersRepository.save(member);</span>
+<span class="fc" id="L56">  }</span>
+
+  public List&lt;CommunityMemberEntity&gt; findByUserId(String userId) {
+<span class="fc" id="L59">    return communityMembersRepository.findByUserId(userId);</span>
+  }
+
+  public List&lt;CommunityMemberEntity&gt; findByCommunityId(String communityId) {
+<span class="fc" id="L63">    return communityMembersRepository.findByCommunityId(communityId);</span>
+  }
+
+  public Optional&lt;CommunityMemberEntity&gt; findByMemberId(String memberId) {
+<span class="nc" id="L67">    return communityMembersRepository.findById(memberId);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

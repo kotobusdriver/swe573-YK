@@ -1,10 +1,9 @@
 package swe.domain.repositories;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import swe.domain.entities.CommunityEntity;
 
-import java.util.List;
-
 public interface CommunitiesRepository extends JpaRepository<CommunityEntity, String> {
-    List<CommunityEntity> findByNameContainingIgnoreCase(String searchText);
+  List<CommunityEntity> findByNameContainingIgnoreCase(String searchText);
 }

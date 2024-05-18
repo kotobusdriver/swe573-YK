@@ -4,9 +4,7 @@ import static swe.rest.controllers.CommunitiesController.BASE_PATH;
 
 import java.util.List;
 import java.util.Optional;
-
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +38,7 @@ public class CommunitiesController {
 
   @PostMapping("/{id}/members")
   ResponseEntity<CommunityMemberUserResource> createCommunityMember(
-          @PathVariable("id") String communityId, @RequestBody SubscriptionToCommunityRequest request) {
+      @PathVariable("id") String communityId, @RequestBody SubscriptionToCommunityRequest request) {
     CommunityMemberEntity member = membersService.createMember(communityId, request.getUserId());
     return ResponseEntity.ok(CommunityMemberUserResource.convert(member));
   }
@@ -56,14 +54,16 @@ public class CommunitiesController {
   }
 
   @GetMapping
-  ResponseEntity<CommunityResourceListResponse> getCommunities(@RequestParam(value = "search", required = false) String searchText) {
-    List<CommunityEntity> communities = StringUtils.hasText(searchText)
+  ResponseEntity<CommunityResourceListResponse> getCommunities(
+      @RequestParam(value = "search", required = false) String searchText) {
+    List<CommunityEntity> communities =
+        StringUtils.hasText(searchText)
             ? communitiesRepository.findByNameContainingIgnoreCase(searchText)
             : communitiesRepository.findAll();
     return ResponseEntity.ok(
-            CommunityResourceListResponse.builder()
-                    .communities(communities.stream().map(m -> CommunityResource.convert(m)).toList())
-                    .build());
+        CommunityResourceListResponse.builder()
+            .communities(communities.stream().map(m -> CommunityResource.convert(m)).toList())
+            .build());
   }
 
   @GetMapping("/{id}")
@@ -76,11 +76,11 @@ public class CommunitiesController {
   }
 
   @GetMapping("/{id}/posts")
-  ResponseEntity<PostResourceListResponse> listPosts(@PathVariable("id") String communityId){
+  ResponseEntity<PostResourceListResponse> listPosts(@PathVariable("id") String communityId) {
     List<PostEntity> posts = postsRepository.findByCommunityId(communityId);
     return ResponseEntity.ok(
-            PostResourceListResponse.builder()
-                    .posts(posts.stream().map(m -> PostResource.convert(m)).toList())
-                    .build());
+        PostResourceListResponse.builder()
+            .posts(posts.stream().map(m -> PostResource.convert(m)).toList())
+            .build());
   }
 }

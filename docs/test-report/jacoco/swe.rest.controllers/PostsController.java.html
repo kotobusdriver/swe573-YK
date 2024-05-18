@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PostsController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">application</a> &gt; <a href="index.source.html" class="el_package">swe.rest.controllers</a> &gt; <span class="el_source">PostsController.java</span></div><h1>PostsController.java</h1><pre class="source lang-java linenums">package swe.rest.controllers;
+
+import static swe.rest.controllers.PostsController.BASE_PATH;
+
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import swe.domain.entities.PostEntity;
+import swe.rest.models.*;
+import swe.services.PostService;
+import swe.workflows.CreatePostWorkflow;
+
+@CrossOrigin
+@RequestMapping(BASE_PATH)
+@RestController
+@AllArgsConstructor
+public class PostsController {
+  public static final String BASE_PATH = &quot;/api/posts&quot;;
+
+  private final CreatePostWorkflow createPostWorkflow;
+  private final PostService postService;
+
+  @PostMapping
+  ResponseEntity&lt;PostResource&gt; createPost(@RequestBody CreatePostRequest createPostRequest) {
+<span class="fc" id="L25">    PostEntity postEntity = createPostWorkflow.execute(createPostRequest);</span>
+<span class="fc" id="L26">    return ResponseEntity.ok(PostResource.convert(postEntity));</span>
+  }
+
+  @DeleteMapping(&quot;/{id}&quot;)
+  ResponseEntity&lt;Void&gt; deletePost(
+      @PathVariable(&quot;id&quot;) String postId, @RequestParam(&quot;memberId&quot;) String memberId) {
+<span class="fc" id="L32">    postService.deletePost(postId, memberId);</span>
+<span class="fc" id="L33">    return ResponseEntity.noContent().build();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

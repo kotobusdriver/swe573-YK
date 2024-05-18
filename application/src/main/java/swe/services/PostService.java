@@ -42,15 +42,14 @@ public class PostService {
       CommunityEntity community,
       CommunityMemberEntity member,
       List<PostFieldResource> fieldResources) {
-    PostEntity post =
-        PostEntity.builder().community(community).member(member).build();
+    PostEntity post = PostEntity.builder().community(community).member(member).build();
     List<PostFieldEntity> fields = buildPostFields(community, fieldResources, post);
     post.setFields(fields);
     return postsRepository.save(post);
   }
 
   private List<PostFieldEntity> buildPostFields(
-          CommunityEntity community, List<PostFieldResource> fieldResources, PostEntity post) {
+      CommunityEntity community, List<PostFieldResource> fieldResources, PostEntity post) {
     Map<String, FieldDefinitionEntity> map =
         community.getFieldDefinitions().stream()
             .collect(Collectors.toMap(fd -> fd.getId(), Function.identity()));
@@ -58,14 +57,14 @@ public class PostService {
     return fieldResources.stream().map(fr -> fr.convert(map, post)).toList();
   }
 
-    public void deletePost(String postId, String memberId) {
-      Optional<PostEntity> foundPost = postsRepository.findById(postId);
-      if (foundPost.isPresent()) {
-        PostEntity post = foundPost.get();
-        if (!memberId.equals(post.getMember().getId())) {
-          throw new MemberIsNotAllowedToDeletePostException(memberId, postId);
-        }
-        postsRepository.delete(post);
+  public void deletePost(String postId, String memberId) {
+    Optional<PostEntity> foundPost = postsRepository.findById(postId);
+    if (foundPost.isPresent()) {
+      PostEntity post = foundPost.get();
+      if (!memberId.equals(post.getMember().getId())) {
+        throw new MemberIsNotAllowedToDeletePostException(memberId, postId);
       }
+      postsRepository.delete(post);
     }
+  }
 }

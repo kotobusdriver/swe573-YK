@@ -27,7 +27,8 @@ public class PostsController {
   }
 
   @DeleteMapping("/{id}")
-  ResponseEntity<Void> deletePost(@PathVariable("id") String postId, @RequestParam("memberId") String memberId) {
+  ResponseEntity<Void> deletePost(
+      @PathVariable("id") String postId, @RequestParam("memberId") String memberId) {
     postService.deletePost(postId, memberId);
     return ResponseEntity.noContent().build();
   }

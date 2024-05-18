@@ -1,6 +1,7 @@
 package swe.spec.usecases;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -13,51 +14,47 @@ import swe.rest.controllers.CommunitiesController;
 import swe.rest.models.CommunityMemberListResponse;
 import swe.rest.models.CommunityMemberResource;
 
-import java.util.Optional;
-
 @Component
 public class GetCommunityMembersUsecase {
-    @Autowired protected ObjectMapper objectMapper;
-    @Autowired protected MockMvc mockMvc;
+  @Autowired protected ObjectMapper objectMapper;
+  @Autowired protected MockMvc mockMvc;
 
+  public CommunityMemberListResponse invokeUsecase(String communityId) throws Exception {
+    MockHttpServletRequestBuilder getCommunityMembersRequestBuilder =
+        MockMvcRequestBuilders.get(CommunitiesController.BASE_PATH + "/" + communityId + "/members")
+            .contentType(MediaType.APPLICATION_JSON);
 
-    public CommunityMemberListResponse invokeUsecase(String communityId) throws Exception {
-        MockHttpServletRequestBuilder getCommunityMembersRequestBuilder =
-                MockMvcRequestBuilders.get(
-                                CommunitiesController.BASE_PATH + "/" + communityId + "/members")
-                        .contentType(MediaType.APPLICATION_JSON);
+    MvcResult getCommunityMembersResponse =
+        mockMvc.perform(getCommunityMembersRequestBuilder).andReturn();
 
-        MvcResult getCommunityMembersResponse =
-                mockMvc.perform(getCommunityMembersRequestBuilder).andReturn();
+    Assertions.assertEquals(200, getCommunityMembersResponse.getResponse().getStatus());
 
-        Assertions.assertEquals(200, getCommunityMembersResponse.getResponse().getStatus());
+    CommunityMemberListResponse communityMemberList =
+        objectMapper.readValue(
+            getCommunityMembersResponse.getResponse().getContentAsString(),
+            CommunityMemberListResponse.class);
 
-        CommunityMemberListResponse communityMemberList =
-                objectMapper.readValue(
-                        getCommunityMembersResponse.getResponse().getContentAsString(),
-                        CommunityMemberListResponse.class);
+    return communityMemberList;
+  }
 
-        return communityMemberList;
-    }
+  public CommunityMemberResource getUserMembershipForCommunity(String userId, String communityId)
+      throws Exception {
+    CommunityMemberListResponse communityMemberList = invokeUsecase(communityId);
 
-    public CommunityMemberResource getUserMembershipForCommunity(String userId, String communityId) throws Exception {
-        CommunityMemberListResponse communityMemberList = invokeUsecase(communityId);
+    Assertions.assertFalse(communityMemberList.getMembers().isEmpty());
 
-        Assertions.assertFalse(communityMemberList.getMembers().isEmpty());
+    Optional<CommunityMemberResource> member =
+        communityMemberList.getMembers().stream()
+            .filter(c -> c.getUserId().equals(userId))
+            .findFirst();
 
-        Optional<CommunityMemberResource> member =
-                communityMemberList.getMembers().stream()
-                        .filter(c -> c.getUserId().equals(userId))
-                        .findFirst();
+    Assertions.assertTrue(member.isPresent());
 
-        Assertions.assertTrue(member.isPresent());
+    return member.get();
+  }
 
-        return member.get();
-    }
-
-    public void checkUserIsCommunityAdmin(String userId, String communityId) throws Exception {
-        CommunityMemberResource member = getUserMembershipForCommunity(userId, communityId);
-        Assertions.assertTrue(member.getAdmin());
-    }
-
+  public void checkUserIsCommunityAdmin(String userId, String communityId) throws Exception {
+    CommunityMemberResource member = getUserMembershipForCommunity(userId, communityId);
+    Assertions.assertTrue(member.getAdmin());
+  }
 }

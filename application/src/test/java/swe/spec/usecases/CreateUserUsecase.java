@@ -15,33 +15,29 @@ import swe.rest.models.UserResource;
 
 @Component
 public class CreateUserUsecase {
-    @Autowired protected ObjectMapper objectMapper;
-    @Autowired protected MockMvc mockMvc;
+  @Autowired protected ObjectMapper objectMapper;
+  @Autowired protected MockMvc mockMvc;
 
-    public UserResource invokeUsecase(String name, String email, String password) throws Exception {
-        CreateUserRequest request =
-                CreateUserRequest.builder()
-                        .name(name)
-                        .email(email)
-                        .password(password)
-                        .build();
+  public UserResource invokeUsecase(String name, String email, String password) throws Exception {
+    CreateUserRequest request =
+        CreateUserRequest.builder().name(name).email(email).password(password).build();
 
-        MockHttpServletRequestBuilder builder =
-                MockMvcRequestBuilders.post(UsersController.BASE_PATH)
-                        .content(objectMapper.writeValueAsString(request))
-                        .contentType(MediaType.APPLICATION_JSON);
+    MockHttpServletRequestBuilder builder =
+        MockMvcRequestBuilders.post(UsersController.BASE_PATH)
+            .content(objectMapper.writeValueAsString(request))
+            .contentType(MediaType.APPLICATION_JSON);
 
-        MvcResult createUserResponse = mockMvc.perform(builder).andReturn();
+    MvcResult createUserResponse = mockMvc.perform(builder).andReturn();
 
-        Assertions.assertEquals(200, createUserResponse.getResponse().getStatus());
+    Assertions.assertEquals(200, createUserResponse.getResponse().getStatus());
 
-        UserResource user =
-                objectMapper.readValue(
-                        createUserResponse.getResponse().getContentAsString(), UserResource.class);
+    UserResource user =
+        objectMapper.readValue(
+            createUserResponse.getResponse().getContentAsString(), UserResource.class);
 
-        Assertions.assertEquals(name, user.getName());
-        Assertions.assertNotNull(user.getId());
+    Assertions.assertEquals(name, user.getName());
+    Assertions.assertNotNull(user.getId());
 
-        return user;
-    }
+    return user;
+  }
 }

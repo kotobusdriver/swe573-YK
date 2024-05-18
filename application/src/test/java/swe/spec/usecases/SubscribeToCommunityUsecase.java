@@ -14,31 +14,32 @@ import swe.rest.models.*;
 
 @Component
 public class SubscribeToCommunityUsecase {
-    @Autowired protected ObjectMapper objectMapper;
-    @Autowired protected MockMvc mockMvc;
+  @Autowired protected ObjectMapper objectMapper;
+  @Autowired protected MockMvc mockMvc;
 
-    public CommunityMemberUserResource invokeUsecase(String userId, String communityId) throws Exception {
-        SubscriptionToCommunityRequest subscriptionToCommunityRequest =
-                SubscriptionToCommunityRequest.builder()
-                        .userId(userId)
-                        .build();
+  public CommunityMemberUserResource invokeUsecase(String userId, String communityId)
+      throws Exception {
+    SubscriptionToCommunityRequest subscriptionToCommunityRequest =
+        SubscriptionToCommunityRequest.builder().userId(userId).build();
 
-        MockHttpServletRequestBuilder requestBuilder =
-                MockMvcRequestBuilders.post(CommunitiesController.BASE_PATH + "/" + communityId + "/members")
-                        .content(objectMapper.writeValueAsString(subscriptionToCommunityRequest))
-                        .contentType(MediaType.APPLICATION_JSON);
+    MockHttpServletRequestBuilder requestBuilder =
+        MockMvcRequestBuilders.post(
+                CommunitiesController.BASE_PATH + "/" + communityId + "/members")
+            .content(objectMapper.writeValueAsString(subscriptionToCommunityRequest))
+            .contentType(MediaType.APPLICATION_JSON);
 
-        MvcResult subscribeResponse = mockMvc.perform(requestBuilder).andReturn();
+    MvcResult subscribeResponse = mockMvc.perform(requestBuilder).andReturn();
 
-        Assertions.assertEquals(200, subscribeResponse.getResponse().getStatus());
+    Assertions.assertEquals(200, subscribeResponse.getResponse().getStatus());
 
-        CommunityMemberUserResource membership =
-                objectMapper.readValue(
-                        subscribeResponse.getResponse().getContentAsString(), CommunityMemberUserResource.class);
+    CommunityMemberUserResource membership =
+        objectMapper.readValue(
+            subscribeResponse.getResponse().getContentAsString(),
+            CommunityMemberUserResource.class);
 
-        Assertions.assertNotNull(membership.getId());
-        Assertions.assertEquals(userId, membership.getUserId());
+    Assertions.assertNotNull(membership.getId());
+    Assertions.assertEquals(userId, membership.getUserId());
 
-        return membership;
-    }
+    return membership;
+  }
 }

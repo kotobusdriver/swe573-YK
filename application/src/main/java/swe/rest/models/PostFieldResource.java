@@ -20,8 +20,9 @@ public class PostFieldResource {
 
   public PostFieldEntity convert(Map<String, FieldDefinitionEntity> map, PostEntity post) {
     return PostFieldEntity.builder()
-            .post(post)
-            .fieldDefinition(map.get(templateFieldId))
-            .data(data).build();
+        .post(post)
+        .fieldDefinition(map.get(templateFieldId))
+        .data(data)
+        .build();
   }
 }

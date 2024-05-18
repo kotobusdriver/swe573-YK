@@ -13,17 +13,17 @@ import swe.rest.controllers.PostsController;
 
 @Component
 public class DeletePostUsecase {
-    @Autowired protected ObjectMapper objectMapper;
-    @Autowired protected MockMvc mockMvc;
+  @Autowired protected ObjectMapper objectMapper;
+  @Autowired protected MockMvc mockMvc;
 
-    public void invokeUsecase(String postId, String deletingMemberId) throws Exception {
-        MockHttpServletRequestBuilder deleteRequest =
-                MockMvcRequestBuilders.delete(PostsController.BASE_PATH + "/" + postId)
-                        .queryParam("memberId", deletingMemberId)
-                        .contentType(MediaType.APPLICATION_JSON);
+  public void invokeUsecase(String postId, String deletingMemberId) throws Exception {
+    MockHttpServletRequestBuilder deleteRequest =
+        MockMvcRequestBuilders.delete(PostsController.BASE_PATH + "/" + postId)
+            .queryParam("memberId", deletingMemberId)
+            .contentType(MediaType.APPLICATION_JSON);
 
-        MvcResult createPostResponse = mockMvc.perform(deleteRequest).andReturn();
+    MvcResult createPostResponse = mockMvc.perform(deleteRequest).andReturn();
 
-        Assertions.assertEquals(204, createPostResponse.getResponse().getStatus());
-    }
+    Assertions.assertEquals(204, createPostResponse.getResponse().getStatus());
+  }
 }

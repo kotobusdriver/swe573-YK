@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommunityResource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">application</a> &gt; <a href="index.source.html" class="el_package">swe.rest.models</a> &gt; <span class="el_source">CommunityResource.java</span></div><h1>CommunityResource.java</h1><pre class="source lang-java linenums">package swe.rest.models;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import swe.domain.entities.CommunityEntity;
+import swe.domain.models.CommunityStatus;
+import swe.domain.models.CommunityVisibility;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class CommunityResource {
+  String id;
+  String name;
+  String description;
+  CommunityVisibility visibility;
+  CommunityStatus status;
+  PostTemplateResource postTemplateResource;
+
+  public static CommunityResource convert(CommunityEntity community) {
+<span class="fc" id="L24">    return CommunityResource.builder()</span>
+<span class="fc" id="L25">        .id(community.getId())</span>
+<span class="fc" id="L26">        .name(community.getName())</span>
+<span class="fc" id="L27">        .description(community.getDescription())</span>
+<span class="fc" id="L28">        .visibility(community.getVisibility())</span>
+<span class="fc" id="L29">        .status(community.getStatus())</span>
+<span class="fc" id="L30">        .postTemplateResource(PostTemplateResource.convert(community.getFieldDefinitions()))</span>
+<span class="fc" id="L31">        .build();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

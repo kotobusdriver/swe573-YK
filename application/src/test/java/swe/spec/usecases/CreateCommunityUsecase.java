@@ -16,41 +16,39 @@ import swe.rest.models.*;
 
 @Component
 public class CreateCommunityUsecase {
-    @Autowired
-    protected ObjectMapper objectMapper;
-    @Autowired
-    protected MockMvc mockMvc;
+  @Autowired protected ObjectMapper objectMapper;
+  @Autowired protected MockMvc mockMvc;
 
-    public CommunityResource invokeUsecase(String name, String description, String adminUserId, PostTemplate
-            template) throws Exception {
-        CreateCommunityRequest createCommunityRequest =
-                CreateCommunityRequest.builder()
-                        .name(name)
-                        .description(description)
-                        .visibility(CommunityVisibility.PUBLIC)
-                        .adminUserId(adminUserId)
-                        .template(template)
-                        .build();
+  public CommunityResource invokeUsecase(
+      String name, String description, String adminUserId, PostTemplate template) throws Exception {
+    CreateCommunityRequest createCommunityRequest =
+        CreateCommunityRequest.builder()
+            .name(name)
+            .description(description)
+            .visibility(CommunityVisibility.PUBLIC)
+            .adminUserId(adminUserId)
+            .template(template)
+            .build();
 
-        MockHttpServletRequestBuilder createCommunityBuilder =
-                MockMvcRequestBuilders.post(CommunitiesController.BASE_PATH)
-                        .content(objectMapper.writeValueAsString(createCommunityRequest))
-                        .contentType(MediaType.APPLICATION_JSON);
+    MockHttpServletRequestBuilder createCommunityBuilder =
+        MockMvcRequestBuilders.post(CommunitiesController.BASE_PATH)
+            .content(objectMapper.writeValueAsString(createCommunityRequest))
+            .contentType(MediaType.APPLICATION_JSON);
 
-        MvcResult createCommunityResponse = mockMvc.perform(createCommunityBuilder).andReturn();
+    MvcResult createCommunityResponse = mockMvc.perform(createCommunityBuilder).andReturn();
 
-        Assertions.assertEquals(200, createCommunityResponse.getResponse().getStatus());
+    Assertions.assertEquals(200, createCommunityResponse.getResponse().getStatus());
 
-        CommunityResource community =
-                objectMapper.readValue(
-                        createCommunityResponse.getResponse().getContentAsString(), CommunityResource.class);
+    CommunityResource community =
+        objectMapper.readValue(
+            createCommunityResponse.getResponse().getContentAsString(), CommunityResource.class);
 
-        Assertions.assertEquals(name, community.getName());
-        Assertions.assertEquals(description, community.getDescription());
-        Assertions.assertEquals(CommunityVisibility.PUBLIC, community.getVisibility());
-        Assertions.assertEquals(CommunityStatus.ACTIVE, community.getStatus());
-        Assertions.assertNotNull(community.getId());
+    Assertions.assertEquals(name, community.getName());
+    Assertions.assertEquals(description, community.getDescription());
+    Assertions.assertEquals(CommunityVisibility.PUBLIC, community.getVisibility());
+    Assertions.assertEquals(CommunityStatus.ACTIVE, community.getStatus());
+    Assertions.assertNotNull(community.getId());
 
-        return community;
-    }
+    return community;
+  }
 }

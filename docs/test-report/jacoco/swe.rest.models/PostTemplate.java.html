@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PostTemplate.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">application</a> &gt; <a href="index.source.html" class="el_package">swe.rest.models</a> &gt; <span class="el_source">PostTemplate.java</span></div><h1>PostTemplate.java</h1><pre class="source lang-java linenums">package swe.rest.models;
+
+import java.util.List;
+import lombok.*;
+import swe.domain.entities.CommunityEntity;
+import swe.domain.entities.FieldDefinitionEntity;
+import swe.domain.models.FieldType;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class PostTemplate {
+  @Singular private List&lt;TemplateField&gt; fields;
+
+  @Data
+  @Builder
+  @AllArgsConstructor
+  @NoArgsConstructor
+  public static class TemplateField {
+    String name;
+    Boolean optional;
+    FieldType type;
+
+    public FieldDefinitionEntity convert(CommunityEntity community) {
+<span class="fc" id="L26">      return FieldDefinitionEntity.builder()</span>
+<span class="fc" id="L27">          .community(community)</span>
+<span class="fc" id="L28">          .name(name)</span>
+<span class="fc" id="L29">          .optional(optional)</span>
+<span class="fc" id="L30">          .type(type)</span>
+<span class="fc" id="L31">          .build();</span>
+    }
+  }
+
+  public List&lt;FieldDefinitionEntity&gt; convert(CommunityEntity community) {
+<span class="fc" id="L36">    return fields.stream().map(f -&gt; f.convert(community)).toList();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

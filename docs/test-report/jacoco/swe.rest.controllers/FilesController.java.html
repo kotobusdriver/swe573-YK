@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FilesController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">application</a> &gt; <a href="index.source.html" class="el_package">swe.rest.controllers</a> &gt; <span class="el_source">FilesController.java</span></div><h1>FilesController.java</h1><pre class="source lang-java linenums">package swe.rest.controllers;
+
+import static swe.rest.controllers.FilesController.BASE_PATH;
+
+import lombok.AllArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import swe.services.FilesStorageService;
+
+@CrossOrigin
+@RequestMapping(BASE_PATH)
+@RestController
+@AllArgsConstructor
+public class FilesController {
+  public static final String BASE_PATH = &quot;/files&quot;;
+
+  private final FilesStorageService storageService;
+
+  @PostMapping(&quot;/{filename}&quot;)
+  public ResponseEntity&lt;Void&gt; upload(
+      @RequestParam(&quot;file&quot;) MultipartFile file, @PathVariable(&quot;filename&quot;) String filename) {
+<span class="nc" id="L26">    storageService.save(file, filename);</span>
+<span class="nc" id="L27">    return ResponseEntity.ok().build();</span>
+  }
+
+  @GetMapping(&quot;/{filename}&quot;)
+  public ResponseEntity&lt;Resource&gt; download(@PathVariable(&quot;filename&quot;) String filename) {
+<span class="nc" id="L32">    Resource file = storageService.load(filename);</span>
+<span class="nc" id="L33">    return ResponseEntity.ok()</span>
+<span class="nc" id="L34">        .header(</span>
+<span class="nc" id="L35">            HttpHeaders.CONTENT_DISPOSITION, &quot;attachment; filename=\&quot;&quot; + file.getFilename() + &quot;\&quot;&quot;)</span>
+<span class="nc" id="L36">        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)</span>
+<span class="nc" id="L37">        .body(file);</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

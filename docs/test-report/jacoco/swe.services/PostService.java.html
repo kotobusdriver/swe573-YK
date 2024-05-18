@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PostService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">application</a> &gt; <a href="index.source.html" class="el_package">swe.services</a> &gt; <span class="el_source">PostService.java</span></div><h1>PostService.java</h1><pre class="source lang-java linenums">package swe.services;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import swe.domain.entities.*;
+import swe.domain.repositories.CommunitiesRepository;
+import swe.domain.repositories.CommunityMembersRepository;
+import swe.domain.repositories.PostsRepository;
+import swe.exceptions.CommunityNotFoundException;
+import swe.exceptions.MemberIsNotAllowedToDeletePostException;
+import swe.exceptions.MemberNotFoundException;
+import swe.rest.models.CreatePostRequest;
+import swe.rest.models.PostFieldResource;
+
+@Service
+@AllArgsConstructor
+public class PostService {
+  private final CommunitiesRepository communitiesRepository;
+  private final CommunityMembersRepository communityMembersRepository;
+  private final PostsRepository postsRepository;
+
+  public PostEntity createPost(CreatePostRequest command) {
+<span class="fc" id="L28">    Optional&lt;CommunityEntity&gt; foundCommunity =</span>
+<span class="fc" id="L29">        communitiesRepository.findById(command.getCommunityId());</span>
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">    if (foundCommunity.isEmpty()) {</span>
+<span class="nc" id="L31">      throw new CommunityNotFoundException(command.getCommunityId());</span>
+    }
+<span class="fc" id="L33">    Optional&lt;CommunityMemberEntity&gt; foundMember =</span>
+<span class="fc" id="L34">        communityMembersRepository.findById(command.getByMemberId());</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">    if (foundMember.isEmpty()) {</span>
+<span class="nc" id="L36">      throw new MemberNotFoundException(command.getByMemberId());</span>
+    }
+<span class="fc" id="L38">    return createPost(foundCommunity.get(), foundMember.get(), command.getFields());</span>
+  }
+
+  public PostEntity createPost(
+      CommunityEntity community,
+      CommunityMemberEntity member,
+      List&lt;PostFieldResource&gt; fieldResources) {
+<span class="fc" id="L45">    PostEntity post = PostEntity.builder().community(community).member(member).build();</span>
+<span class="fc" id="L46">    List&lt;PostFieldEntity&gt; fields = buildPostFields(community, fieldResources, post);</span>
+<span class="fc" id="L47">    post.setFields(fields);</span>
+<span class="fc" id="L48">    return postsRepository.save(post);</span>
+  }
+
+  private List&lt;PostFieldEntity&gt; buildPostFields(
+      CommunityEntity community, List&lt;PostFieldResource&gt; fieldResources, PostEntity post) {
+<span class="fc" id="L53">    Map&lt;String, FieldDefinitionEntity&gt; map =</span>
+<span class="fc" id="L54">        community.getFieldDefinitions().stream()</span>
+<span class="fc" id="L55">            .collect(Collectors.toMap(fd -&gt; fd.getId(), Function.identity()));</span>
+
+<span class="fc" id="L57">    return fieldResources.stream().map(fr -&gt; fr.convert(map, post)).toList();</span>
+  }
+
+  public void deletePost(String postId, String memberId) {
+<span class="fc" id="L61">    Optional&lt;PostEntity&gt; foundPost = postsRepository.findById(postId);</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">    if (foundPost.isPresent()) {</span>
+<span class="fc" id="L63">      PostEntity post = foundPost.get();</span>
+<span class="pc bpc" id="L64" title="1 of 2 branches missed.">      if (!memberId.equals(post.getMember().getId())) {</span>
+<span class="nc" id="L65">        throw new MemberIsNotAllowedToDeletePostException(memberId, postId);</span>
+      }
+<span class="fc" id="L67">      postsRepository.delete(post);</span>
+    }
+<span class="fc" id="L69">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

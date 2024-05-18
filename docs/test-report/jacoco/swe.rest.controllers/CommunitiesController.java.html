@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommunitiesController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">application</a> &gt; <a href="index.source.html" class="el_package">swe.rest.controllers</a> &gt; <span class="el_source">CommunitiesController.java</span></div><h1>CommunitiesController.java</h1><pre class="source lang-java linenums">package swe.rest.controllers;
+
+import static swe.rest.controllers.CommunitiesController.BASE_PATH;
+
+import java.util.List;
+import java.util.Optional;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+import swe.domain.entities.CommunityEntity;
+import swe.domain.entities.CommunityMemberEntity;
+import swe.domain.entities.PostEntity;
+import swe.domain.repositories.CommunitiesRepository;
+import swe.domain.repositories.PostsRepository;
+import swe.rest.models.*;
+import swe.services.MembersService;
+import swe.workflows.CreateCommunityWorkflow;
+
+@CrossOrigin
+@RequestMapping(BASE_PATH)
+@RestController
+@AllArgsConstructor
+public class CommunitiesController {
+  public static final String BASE_PATH = &quot;/api/communities&quot;;
+
+  private final CreateCommunityWorkflow createCommunityWorkflow;
+  private final MembersService membersService;
+  private final CommunitiesRepository communitiesRepository;
+  private final PostsRepository postsRepository;
+
+  @PostMapping
+  ResponseEntity&lt;CommunityResource&gt; createCommunity(
+      @RequestBody CreateCommunityRequest createCommunityRequest) {
+<span class="fc" id="L35">    CommunityEntity community = createCommunityWorkflow.execute(createCommunityRequest);</span>
+<span class="fc" id="L36">    return ResponseEntity.ok(CommunityResource.convert(community));</span>
+  }
+
+  @PostMapping(&quot;/{id}/members&quot;)
+  ResponseEntity&lt;CommunityMemberUserResource&gt; createCommunityMember(
+      @PathVariable(&quot;id&quot;) String communityId, @RequestBody SubscriptionToCommunityRequest request) {
+<span class="fc" id="L42">    CommunityMemberEntity member = membersService.createMember(communityId, request.getUserId());</span>
+<span class="fc" id="L43">    return ResponseEntity.ok(CommunityMemberUserResource.convert(member));</span>
+  }
+
+  @GetMapping(&quot;/{id}/members&quot;)
+  ResponseEntity&lt;CommunityMemberListResponse&gt; getCommunityMembers(
+      @PathVariable(&quot;id&quot;) String communityId) {
+<span class="fc" id="L49">    List&lt;CommunityMemberEntity&gt; memberships = membersService.findByCommunityId(communityId);</span>
+<span class="fc" id="L50">    return ResponseEntity.ok(</span>
+<span class="fc" id="L51">        CommunityMemberListResponse.builder()</span>
+<span class="fc" id="L52">            .members(memberships.stream().map(m -&gt; CommunityMemberResource.convert(m)).toList())</span>
+<span class="fc" id="L53">            .build());</span>
+  }
+
+  @GetMapping
+  ResponseEntity&lt;CommunityResourceListResponse&gt; getCommunities(
+      @RequestParam(value = &quot;search&quot;, required = false) String searchText) {
+    List&lt;CommunityEntity&gt; communities =
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        StringUtils.hasText(searchText)</span>
+<span class="nc" id="L61">            ? communitiesRepository.findByNameContainingIgnoreCase(searchText)</span>
+<span class="nc" id="L62">            : communitiesRepository.findAll();</span>
+<span class="nc" id="L63">    return ResponseEntity.ok(</span>
+<span class="nc" id="L64">        CommunityResourceListResponse.builder()</span>
+<span class="nc" id="L65">            .communities(communities.stream().map(m -&gt; CommunityResource.convert(m)).toList())</span>
+<span class="nc" id="L66">            .build());</span>
+  }
+
+  @GetMapping(&quot;/{id}&quot;)
+  ResponseEntity&lt;CommunityResource&gt; getCommunityById(@PathVariable(&quot;id&quot;) String communityId) {
+<span class="nc" id="L71">    Optional&lt;CommunityEntity&gt; community = communitiesRepository.findById(communityId);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">    if (community.isEmpty()) {</span>
+<span class="nc" id="L73">      return ResponseEntity.notFound().build();</span>
+    }
+<span class="nc" id="L75">    return ResponseEntity.ok(CommunityResource.convert(community.get()));</span>
+  }
+
+  @GetMapping(&quot;/{id}/posts&quot;)
+  ResponseEntity&lt;PostResourceListResponse&gt; listPosts(@PathVariable(&quot;id&quot;) String communityId) {
+<span class="nc" id="L80">    List&lt;PostEntity&gt; posts = postsRepository.findByCommunityId(communityId);</span>
+<span class="nc" id="L81">    return ResponseEntity.ok(</span>
+<span class="nc" id="L82">        PostResourceListResponse.builder()</span>
+<span class="nc" id="L83">            .posts(posts.stream().map(m -&gt; PostResource.convert(m)).toList())</span>
+<span class="nc" id="L84">            .build());</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
