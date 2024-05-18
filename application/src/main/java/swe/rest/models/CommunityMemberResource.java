@@ -13,6 +13,7 @@ import swe.domain.entities.CommunityMemberEntity;
 public class CommunityMemberResource {
   String id;
   String userId;
+  String name;
   String communityId;
   Boolean admin;
 
@@ -20,6 +21,7 @@ public class CommunityMemberResource {
     return CommunityMemberResource.builder()
         .id(member.getId())
         .userId(member.getUser().getId())
+        .name(member.getUser().getName())
         .communityId(member.getCommunity().getId())
         .admin(member.getIsAdmin())
         .build();

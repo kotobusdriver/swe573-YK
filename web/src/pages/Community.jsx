@@ -78,6 +78,12 @@ function Community() {
                     <h1>{community.name}</h1>
                     <h6>{community.visibility}, {community.status}</h6>
                     <h4>{community.description}</h4>
+                    <span>Members: </span>
+                    {members != null && members.length > 0 &&
+                        members.map((member, index) => (
+                            <span key={index} className="m-1 badge text-bg-primary">{member.name}</span>
+                        ))
+                    }
                     {context.user != null && memberId == null &&
                         <button type="button" className="btn btn-outline-primary d-flex justify-content-end"
                                 onClick={becomeMember}>Subscribe
