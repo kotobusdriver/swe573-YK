@@ -60,7 +60,7 @@ function CreateCommunity() {
 
         fetch(`/api/communities`, requestOptions)
             .then(response => {
-                if(!response.ok) throw new Error("error");
+                if (!response.ok) throw new Error("error");
                 else goHome();
             })
             .catch(error => handleCreationFailure(error));
@@ -110,6 +110,7 @@ function CreateCommunity() {
     }
 
     function setFieldType(index, newType) {
+        console.log("index: " + index)
         const nextFields = fields.map((f, i) => {
             if (i === index) {
                 f.type = newType
@@ -118,6 +119,7 @@ function CreateCommunity() {
                 return f;
             }
         });
+        console.log("new fields: " + JSON.stringify(nextFields))
         setFields(nextFields);
     }
 
@@ -196,25 +198,27 @@ function CreateCommunity() {
                                         <label htmlFor="inputFieldType" className="col-sm-2 col-form-label">Field
                                             type</label>
                                         <div className="col-sm-10">
-                                            {
-                                                Object.keys(FIELD_TYPES).map((key, index) => (
-                                                    <div key={key} className="form-check">
-                                                        <input
-                                                            type="radio"
-                                                            name="current-type"
-                                                            className="form-check-input"
-                                                            id={key}
-                                                            value={FIELD_TYPES[key]}
-                                                            onChange={event => {
-                                                                setFieldType(index, event.target.value);
-                                                            }}
-                                                        />
-                                                        <label className="form-check-label" htmlFor={key}>
-                                                            {key}
-                                                        </label>
-                                                    </div>
-                                                ))
-                                            }
+                                            <fieldset id={"group" + index}>
+                                                {
+                                                    Object.keys(FIELD_TYPES).map((key) => (
+                                                        <div key={key} className="form-check">
+                                                            <input
+                                                                type="radio"
+                                                                name={"group" + index}
+                                                                className="form-check-input"
+                                                                id={key}
+                                                                value={FIELD_TYPES[key]}
+                                                                onChange={event => {
+                                                                    setFieldType(index, event.target.value);
+                                                                }}
+                                                            />
+                                                            <label className="form-check-label" htmlFor={key}>
+                                                                {key}
+                                                            </label>
+                                                        </div>
+                                                    ))
+                                                }
+                                            </fieldset>
                                         </div>
                                         <div className="col-sm-10 form-check">
                                             <input type="checkbox" className="form-check-input" id="flexCheckDefault"
