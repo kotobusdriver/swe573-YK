@@ -8,6 +8,6 @@ public class CreateUserTest extends Scenario {
   @Test
   public void create_user() throws Exception {
     createUserUsecase.invokeUsecase("Amy", "amy@company.com", "password");
-    // TODO: add login usecase
+    loginUsecase.invokeUsecase("amy@company.com", "password");
   }
 }

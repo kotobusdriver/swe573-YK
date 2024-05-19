@@ -25,6 +25,7 @@ public class Scenario {
   @Autowired protected ObjectMapper objectMapper;
   @Autowired protected MockMvc mockMvc;
   @Autowired protected CreateUserUsecase createUserUsecase;
+  @Autowired protected LoginUsecase loginUsecase;
   @Autowired protected CreateCommunityUsecase createCommunityUsecase;
   @Autowired protected SendPostUsecase sendPostUsecase;
   @Autowired protected GetUserCommunitiesUsecase getUserCommunitiesUsecase;
