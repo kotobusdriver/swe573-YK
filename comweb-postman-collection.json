@@ -1,0 +1,1185 @@
+{
+	"info": {
+		"_postman_id": "bc1be8bd-53af-4a34-9919-5ffdac387ef7",
+		"name": "OpenAPI definition",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7295265"
+	},
+	"item": [
+		{
+			"name": "files",
+			"item": [
+				{
+					"name": "{filename}",
+					"item": [
+						{
+							"name": "download",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/files/:filename",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"files",
+										":filename"
+									],
+									"variable": [
+										{
+											"key": "filename",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/files/:filename",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"files",
+												":filename"
+											],
+											"variable": [
+												{
+													"key": "filename"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						},
+						{
+							"name": "upload",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"file\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/files/:filename",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"files",
+										":filename"
+									],
+									"variable": [
+										{
+											"key": "filename",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"file\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/files/:filename",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"files",
+												":filename"
+											],
+											"variable": [
+												{
+													"key": "filename"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "communities",
+									"item": [
+										{
+											"name": "get Communities",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/users/:id/communities",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"users",
+														":id",
+														"communities"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "*/*"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/api/users/:id/communities",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"users",
+																":id",
+																"communities"
+															],
+															"variable": [
+																{
+																	"key": "id"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "*/*"
+														}
+													],
+													"cookie": [],
+													"body": "{\n  \"communities\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"visibility\": \"PUBLIC\",\n      \"status\": \"ACTIVE\",\n      \"postTemplateResources\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"fields\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"DATE\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"ATTACHMENT\"\n            }\n          ]\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"fields\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"IMAGE\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"TEXT\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"visibility\": \"PUBLIC\",\n      \"status\": \"ARCHIVED\",\n      \"postTemplateResources\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"fields\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"ATTACHMENT\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"IMAGE\"\n            }\n          ]\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"fields\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"DATE\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"DATE\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "create User",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/users",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "posts",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "delete Post",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/posts/:id?memberId=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"posts",
+												":id"
+											],
+											"query": [
+												{
+													"key": "memberId",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/posts/:id?memberId=<string>",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"posts",
+														":id"
+													],
+													"query": [
+														{
+															"key": "memberId",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "create Post",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"communityId\": \"<string>\",\n  \"byMemberId\": \"<string>\",\n  \"templateId\": \"<string>\",\n  \"fields\": [\n    {\n      \"id\": \"<string>\",\n      \"templateFieldId\": \"<string>\",\n      \"data\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"templateFieldId\": \"<string>\",\n      \"data\": \"<string>\"\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/posts",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"posts"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"communityId\": \"<string>\",\n  \"byMemberId\": \"<string>\",\n  \"templateId\": \"<string>\",\n  \"fields\": [\n    {\n      \"id\": \"<string>\",\n      \"templateFieldId\": \"<string>\",\n      \"data\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"templateFieldId\": \"<string>\",\n      \"data\": \"<string>\"\n    }\n  ]\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/posts",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"posts"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<string>\",\n  \"communityId\": \"<string>\",\n  \"byMemberId\": \"<string>\",\n  \"fields\": [\n    {\n      \"id\": \"<string>\",\n      \"templateFieldId\": \"<string>\",\n      \"data\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"templateFieldId\": \"<string>\",\n      \"data\": \"<string>\"\n    }\n  ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "login",
+					"item": [
+						{
+							"name": "login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"login"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"login"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "communities",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "members",
+									"item": [
+										{
+											"name": "get Community Members",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/communities/:id/members",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"communities",
+														":id",
+														"members"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "*/*"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/api/communities/:id/members",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"communities",
+																":id",
+																"members"
+															],
+															"variable": [
+																{
+																	"key": "id"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "*/*"
+														}
+													],
+													"cookie": [],
+													"body": "{\n  \"members\": [\n    {\n      \"id\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"communityId\": \"<string>\",\n      \"admin\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"userId\": \"<string>\",\n      \"name\": \"<string>\",\n      \"communityId\": \"<string>\",\n      \"admin\": \"<boolean>\"\n    }\n  ]\n}"
+												}
+											]
+										},
+										{
+											"name": "create Community Member",
+											"request": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"userId\": \"<string>\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/communities/:id/members",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"communities",
+														":id",
+														"members"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "POST",
+														"header": [
+															{
+																"key": "Content-Type",
+																"value": "application/json"
+															},
+															{
+																"key": "Accept",
+																"value": "*/*"
+															}
+														],
+														"body": {
+															"mode": "raw",
+															"raw": "{\n  \"userId\": \"<string>\"\n}",
+															"options": {
+																"raw": {
+																	"headerFamily": "json",
+																	"language": "json"
+																}
+															}
+														},
+														"url": {
+															"raw": "{{baseUrl}}/api/communities/:id/members",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"communities",
+																":id",
+																"members"
+															],
+															"variable": [
+																{
+																	"key": "id"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "*/*"
+														}
+													],
+													"cookie": [],
+													"body": "{\n  \"id\": \"<string>\",\n  \"userId\": \"<string>\",\n  \"communityId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<string>\",\n  \"admin\": \"<boolean>\"\n}"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "posts",
+									"item": [
+										{
+											"name": "list Posts",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/communities/:id/posts",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"communities",
+														":id",
+														"posts"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "<string>",
+															"description": "(Required) "
+														}
+													]
+												}
+											},
+											"response": [
+												{
+													"name": "OK",
+													"originalRequest": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "*/*"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/api/communities/:id/posts",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"communities",
+																":id",
+																"posts"
+															],
+															"variable": [
+																{
+																	"key": "id"
+																}
+															]
+														}
+													},
+													"status": "OK",
+													"code": 200,
+													"_postman_previewlanguage": "text",
+													"header": [
+														{
+															"key": "Content-Type",
+															"value": "*/*"
+														}
+													],
+													"cookie": [],
+													"body": "{\n  \"posts\": [\n    {\n      \"id\": \"<string>\",\n      \"communityId\": \"<string>\",\n      \"byMemberId\": \"<string>\",\n      \"fields\": [\n        {\n          \"id\": \"<string>\",\n          \"templateFieldId\": \"<string>\",\n          \"data\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"templateFieldId\": \"<string>\",\n          \"data\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"communityId\": \"<string>\",\n      \"byMemberId\": \"<string>\",\n      \"fields\": [\n        {\n          \"id\": \"<string>\",\n          \"templateFieldId\": \"<string>\",\n          \"data\": \"<string>\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"templateFieldId\": \"<string>\",\n          \"data\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}"
+												}
+											]
+										}
+									]
+								},
+								{
+									"name": "get Community By Id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/communities/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"communities",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/communities/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"communities",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"visibility\": \"PUBLIC\",\n  \"status\": \"ACTIVE\",\n  \"postTemplateResources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"fields\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"DATE\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"TEXT\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"fields\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"TEXT\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"TEXT\"\n        }\n      ]\n    }\n  ]\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "get Communities 1",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/communities?search=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"communities"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/communities?search=<string>",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"communities"
+											],
+											"query": [
+												{
+													"key": "search",
+													"value": "<string>"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"communities\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"visibility\": \"PUBLIC\",\n      \"status\": \"ACTIVE\",\n      \"postTemplateResources\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"fields\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"DATE\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"ATTACHMENT\"\n            }\n          ]\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"fields\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"IMAGE\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"TEXT\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"visibility\": \"PUBLIC\",\n      \"status\": \"ARCHIVED\",\n      \"postTemplateResources\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"fields\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"ATTACHMENT\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"IMAGE\"\n            }\n          ]\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"fields\": [\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"DATE\"\n            },\n            {\n              \"id\": \"<string>\",\n              \"name\": \"<string>\",\n              \"optional\": \"<boolean>\",\n              \"type\": \"DATE\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}"
+								}
+							]
+						},
+						{
+							"name": "create Community",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"adminUserId\": \"<string>\",\n  \"visibility\": \"PUBLIC\",\n  \"templates\": [\n    {\n      \"name\": \"<string>\",\n      \"fields\": [\n        {\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"TEXT\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"TEXT\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"fields\": [\n        {\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"TEXT\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"DATE\"\n        }\n      ]\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/communities",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"communities"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"adminUserId\": \"<string>\",\n  \"visibility\": \"PUBLIC\",\n  \"templates\": [\n    {\n      \"name\": \"<string>\",\n      \"fields\": [\n        {\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"TEXT\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"TEXT\"\n        }\n      ]\n    },\n    {\n      \"name\": \"<string>\",\n      \"fields\": [\n        {\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"TEXT\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"DATE\"\n        }\n      ]\n    }\n  ]\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/communities",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"communities"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"visibility\": \"PUBLIC\",\n  \"status\": \"ACTIVE\",\n  \"postTemplateResources\": [\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"fields\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"DATE\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"TEXT\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"fields\": [\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"TEXT\"\n        },\n        {\n          \"id\": \"<string>\",\n          \"name\": \"<string>\",\n          \"optional\": \"<boolean>\",\n          \"type\": \"TEXT\"\n        }\n      ]\n    }\n  ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "members",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "get Community Member",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/members/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"members",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "OK",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "*/*"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/members/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"members",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "*/*"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"id\": \"<string>\",\n  \"userId\": \"<string>\",\n  \"communityId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"email\": \"<string>\",\n  \"admin\": \"<boolean>\"\n}"
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		}
+	]
+}

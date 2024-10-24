@@ -14,20 +14,22 @@ import swe.domain.models.CommunityVisibility;
 import swe.rest.controllers.CommunitiesController;
 import swe.rest.models.*;
 
+import java.util.List;
+
 @Component
 public class CreateCommunityUsecase {
   @Autowired protected ObjectMapper objectMapper;
   @Autowired protected MockMvc mockMvc;
 
   public CommunityResource invokeUsecase(
-      String name, String description, String adminUserId, PostTemplate template) throws Exception {
+          String name, String description, String adminUserId, List<PostTemplate> templates) throws Exception {
     CreateCommunityRequest createCommunityRequest =
         CreateCommunityRequest.builder()
             .name(name)
             .description(description)
             .visibility(CommunityVisibility.PUBLIC)
             .adminUserId(adminUserId)
-            .template(template)
+            .templates(templates)
             .build();
 
     MockHttpServletRequestBuilder createCommunityBuilder =

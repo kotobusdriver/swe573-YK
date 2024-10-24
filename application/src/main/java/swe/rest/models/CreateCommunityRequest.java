@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import swe.domain.models.CommunityVisibility;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -15,5 +17,5 @@ public class CreateCommunityRequest {
   String description;
   String adminUserId;
   CommunityVisibility visibility;
-  PostTemplate template;
+  List<PostTemplate> templates;
 }

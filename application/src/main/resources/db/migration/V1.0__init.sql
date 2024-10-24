@@ -43,14 +43,23 @@ CREATE TABLE Post
 );
 
 
-CREATE TABLE Field_Definition
+CREATE TABLE Template
 (
     id           VARCHAR(100) PRIMARY KEY,
     community_id VARCHAR(100) NOT NULL,
     name         VARCHAR(50)  NOT NULL,
+    FOREIGN KEY (community_id) REFERENCES Community (id)
+);
+
+
+CREATE TABLE Field_Definition
+(
+    id           VARCHAR(100) PRIMARY KEY,
+    template_id  VARCHAR(100) NOT NULL,
+    name         VARCHAR(50)  NOT NULL,
     type         VARCHAR(50)  NOT NULL,
     optional     BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (community_id) REFERENCES Community (id)
+    FOREIGN KEY (template_id) REFERENCES Template (id)
 );
 
 

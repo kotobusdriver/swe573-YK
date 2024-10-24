@@ -21,11 +21,12 @@ public class SendPostUsecase {
   @Autowired protected MockMvc mockMvc;
 
   public PostResource invokeUsecase(
-      String communityId, String memberId, List<PostFieldResource> fields) throws Exception {
+          String communityId, String memberId, String templateId, List<PostFieldResource> fields) throws Exception {
     CreatePostRequest postToCommunityRequest =
         CreatePostRequest.builder()
             .communityId(communityId)
             .byMemberId(memberId)
+            .templateId(templateId)
             .fields(fields)
             .build();
 

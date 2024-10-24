@@ -12,7 +12,7 @@ public class CreateCommunityTest extends Scenario {
 
     CommunityResource community =
         createCommunityUsecase.invokeUsecase(
-            "BirdWatchers", "We watch birds!!", user.getId(), Posting.buildMySpecialTemplate());
+            "BirdWatchers", "We watch birds!!", user.getId(), Posting.buildMySpecialTemplate("my-template"));
 
     getUserCommunitiesUsecase.checkUserHasAccessToCommunity(user.getId(), community.getId());
 

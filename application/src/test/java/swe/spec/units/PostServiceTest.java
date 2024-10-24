@@ -3,15 +3,13 @@ package swe.spec.units;
 import static org.mockito.ArgumentMatchers.any;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import swe.domain.entities.CommunityEntity;
-import swe.domain.entities.CommunityMemberEntity;
-import swe.domain.entities.PostEntity;
-import swe.domain.entities.UserEntity;
+import swe.domain.entities.*;
 import swe.domain.models.CommunityStatus;
 import swe.domain.models.CommunityVisibility;
 import swe.domain.repositories.CommunitiesRepository;
@@ -53,6 +51,7 @@ public class PostServiceTest {
     return CreatePostRequest.builder()
         .communityId("my community id")
         .byMemberId("member id")
+        .templateId("template id")
         .fields(Collections.emptyList())
         .build();
   }
@@ -65,8 +64,16 @@ public class PostServiceTest {
             .description("We watch birds!!")
             .status(CommunityStatus.ACTIVE)
             .visibility(CommunityVisibility.PUBLIC)
-            .fieldDefinitions(Collections.emptyList())
+            .templates(List.of(buildTestTemplate()))
             .build());
+  }
+
+  private TemplateEntity buildTestTemplate() {
+    return TemplateEntity.builder()
+            .id("template id")
+            .name("Template for birds")
+            .fieldDefinitions(Collections.emptyList())
+            .build();
   }
 
   private Optional<CommunityMemberEntity> buildTestCommunityMember() {

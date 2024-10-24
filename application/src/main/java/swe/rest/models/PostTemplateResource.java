@@ -2,7 +2,7 @@ package swe.rest.models;
 
 import java.util.List;
 import lombok.*;
-import swe.domain.entities.FieldDefinitionEntity;
+import swe.domain.entities.TemplateEntity;
 import swe.domain.models.FieldType;
 
 @Data
@@ -10,22 +10,28 @@ import swe.domain.models.FieldType;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostTemplateResource {
+  private String id;
+  private String name;
   @Singular private List<TemplateFieldResource> fields;
 
-  public static PostTemplateResource convert(List<FieldDefinitionEntity> postTemplate) {
-    return PostTemplateResource.builder()
-        .fields(
-            postTemplate.stream()
-                .map(
-                    f ->
-                        TemplateFieldResource.builder()
-                            .id(f.getId())
-                            .name(f.getName())
-                            .optional(f.getOptional())
-                            .type(f.getType())
-                            .build())
-                .toList())
-        .build();
+  public static List<PostTemplateResource> convert(List<TemplateEntity> postTemplates) {
+    return postTemplates.stream()
+            .map(postTemplate -> PostTemplateResource.builder()
+                    .id(postTemplate.getId())
+                    .name(postTemplate.getName())
+                    .fields(
+                            postTemplate.getFieldDefinitions().stream()
+                                    .map(
+                                            f ->
+                                                    TemplateFieldResource.builder()
+                                                            .id(f.getId())
+                                                            .name(f.getName())
+                                                            .optional(f.getOptional())
+                                                            .type(f.getType())
+                                                            .build())
+                                    .toList())
+                    .build())
+            .toList();
   }
 
   @Data

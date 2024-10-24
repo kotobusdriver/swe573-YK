@@ -45,7 +45,7 @@ services:
       bash -c "mvn clean package && java -Dspring.profiles.active=server -jar ./target/community-app.jar"
 
   db:
-    image: 'postgres:13.1-alpine'
+    image: 'postgres:15-alpine'
     container_name: db
     ports:
       - "15432:5432"

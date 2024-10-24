@@ -10,5 +10,6 @@ import lombok.*;
 public class CreatePostRequest {
   String communityId;
   String byMemberId;
+  String templateId;
   @Singular List<PostFieldResource> fields;
 }

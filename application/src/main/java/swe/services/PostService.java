@@ -14,6 +14,7 @@ import swe.domain.repositories.PostsRepository;
 import swe.exceptions.CommunityNotFoundException;
 import swe.exceptions.MemberIsNotAllowedToDeletePostException;
 import swe.exceptions.MemberNotFoundException;
+import swe.exceptions.TemplateNotFoundException;
 import swe.rest.models.CreatePostRequest;
 import swe.rest.models.PostFieldResource;
 
@@ -35,23 +36,28 @@ public class PostService {
     if (foundMember.isEmpty()) {
       throw new MemberNotFoundException(command.getByMemberId());
     }
-    return createPost(foundCommunity.get(), foundMember.get(), command.getFields());
+    return createPost(foundCommunity.get(), foundMember.get(), command.getTemplateId(), command.getFields());
   }
 
   public PostEntity createPost(
-      CommunityEntity community,
-      CommunityMemberEntity member,
-      List<PostFieldResource> fieldResources) {
+          CommunityEntity community,
+          CommunityMemberEntity member,
+          String templateId,
+          List<PostFieldResource> fieldResources) {
+    Optional<TemplateEntity> foundTemplate = community.getTemplate(templateId);
+    if (foundTemplate.isEmpty()) {
+      throw new TemplateNotFoundException(templateId);
+    }
     PostEntity post = PostEntity.builder().community(community).member(member).build();
-    List<PostFieldEntity> fields = buildPostFields(community, fieldResources, post);
+    List<PostFieldEntity> fields = buildPostFields(foundTemplate.get(), fieldResources, post);
     post.setFields(fields);
     return postsRepository.save(post);
   }
 
   private List<PostFieldEntity> buildPostFields(
-      CommunityEntity community, List<PostFieldResource> fieldResources, PostEntity post) {
+      TemplateEntity template, List<PostFieldResource> fieldResources, PostEntity post) {
     Map<String, FieldDefinitionEntity> map =
-        community.getFieldDefinitions().stream()
+        template.getFieldDefinitions().stream()
             .collect(Collectors.toMap(fd -> fd.getId(), Function.identity()));
 
     return fieldResources.stream().map(fr -> fr.convert(map, post)).toList();

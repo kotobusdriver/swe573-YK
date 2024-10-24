@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.*;
 import swe.domain.entities.CommunityEntity;
 import swe.domain.entities.FieldDefinitionEntity;
+import swe.domain.entities.TemplateEntity;
 import swe.domain.models.FieldType;
 
 @Data
@@ -11,6 +12,7 @@ import swe.domain.models.FieldType;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostTemplate {
+  private String name;
   @Singular private List<TemplateField> fields;
 
   @Data
@@ -22,9 +24,9 @@ public class PostTemplate {
     Boolean optional;
     FieldType type;
 
-    public FieldDefinitionEntity convert(CommunityEntity community) {
+    public FieldDefinitionEntity convert(TemplateEntity template) {
       return FieldDefinitionEntity.builder()
-          .community(community)
+          .template(template)
           .name(name)
           .optional(optional)
           .type(type)
@@ -32,7 +34,13 @@ public class PostTemplate {
     }
   }
 
-  public List<FieldDefinitionEntity> convert(CommunityEntity community) {
-    return fields.stream().map(f -> f.convert(community)).toList();
+  public TemplateEntity convert(CommunityEntity community) {
+    TemplateEntity template = TemplateEntity.builder()
+            .community(community)
+            .name(name)
+            .build();
+    List<FieldDefinitionEntity> fieldDefinitions = fields.stream().map(f -> f.convert(template)).toList();
+    template.setFieldDefinitions(fieldDefinitions);
+    return template;
   }
 }

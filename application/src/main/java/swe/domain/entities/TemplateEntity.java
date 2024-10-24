@@ -3,30 +3,29 @@ package swe.domain.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import swe.domain.models.FieldType;
+
+import java.util.List;
 
 @Entity
-@Table(name = "Field_Definition")
+@Table(name = "Template")
 @Getter
 @Setter
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FieldDefinitionEntity {
+public class TemplateEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO, generator = "system-uuid")
   @GenericGenerator(name = "system-uuid", strategy = "uuid2")
   private String id;
 
   @ManyToOne
-  @JoinColumn(name = "template_id")
-  private TemplateEntity template;
-
-  @Enumerated(EnumType.STRING)
-  private FieldType type;
+  @JoinColumn(name = "community_id")
+  private CommunityEntity community;
 
   private String name;
 
-  private Boolean optional;
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "template")
+  private List<FieldDefinitionEntity> fieldDefinitions;
 }

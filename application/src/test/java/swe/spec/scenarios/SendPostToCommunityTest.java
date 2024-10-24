@@ -12,12 +12,13 @@ public class SendPostToCommunityTest extends Scenario {
 
     CommunityResource community =
         createCommunityUsecase.invokeUsecase(
-            "BirdWatchers", "We watch birds!!", user.getId(), Posting.buildMySpecialTemplate());
+            "BirdWatchers", "We watch birds!!", user.getId(), Posting.buildMySpecialTemplate("my-template"));
 
     CommunityMemberResource member =
         getCommunityMembersUsecase.getUserMembershipForCommunity(user.getId(), community.getId());
 
+    String templateId = community.getTemplateByName("my-template").get().getId();
     sendPostUsecase.invokeUsecase(
-        community.getId(), member.getId(), Posting.createMySpecialPostFields(community));
+        community.getId(), member.getId(), templateId, Posting.createMySpecialPostFields(community, templateId));
   }
 }

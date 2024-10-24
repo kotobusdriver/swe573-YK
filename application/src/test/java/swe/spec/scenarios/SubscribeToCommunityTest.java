@@ -13,7 +13,7 @@ public class SubscribeToCommunityTest extends Scenario {
 
     CommunityResource community =
         createCommunityUsecase.invokeUsecase(
-            "BirdWatchers", "We watch birds!!", amy.getId(), Posting.buildMySpecialTemplate());
+            "BirdWatchers", "We watch birds!!", amy.getId(), Posting.buildMySpecialTemplate("my-template"));
 
     UserResource fred = createUserUsecase.invokeUsecase("Fred", "fred@company.com", "pa$$word");
 

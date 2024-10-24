@@ -49,7 +49,7 @@ public class CommunityServiceTest {
         .description("my description")
         .adminUserId("my-admin-user-id")
         .visibility(CommunityVisibility.PUBLIC)
-        .template(Posting.buildMySpecialTemplate())
+        .templates(Posting.buildMySpecialTemplate("my-template"))
         .build();
   }
 }
